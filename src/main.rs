@@ -1,18 +1,3 @@
-/**
- * EVM From Scratch
- * Rust template
- *
- * To work on EVM From Scratch in Rust:
- *
- * - Install Rust: https://www.rust-lang.org/tools/install
- * - Edit `rust/lib.rs`
- * - Run `cd rust && cargo run` to run the tests
- *
- * Hint: most people who were trying to learn Rust and EVM at the same
- * gave up and switched to JavaScript, Python, or Go. If you are new
- * to Rust, implement EVM in another programming language first.
- */
-
 use evm_from_scratch::evm;
 use primitive_types::U256;
 use serde::Deserialize;
@@ -35,13 +20,11 @@ struct Code {
 struct Expect {
     stack: Option<Vec<String>>,
     success: bool,
-    // #[serde(rename = "return")]
-    // ret: Option<String>,
 }
 
 
 fn main() {
-    let text = std::fs::read_to_string("../evm.json").unwrap();
+    let text = std::fs::read_to_string("./evm.json").unwrap();
     let data: Vec<Evmtest> = serde_json::from_str(&text).unwrap();
 
     let total = data.len();
