@@ -1,4 +1,4 @@
-use evm_from_scratch::evm;
+use evm_from_scratch::evm::EVM;
 use primitive_types::U256;
 use serde::Deserialize;
 
@@ -24,17 +24,17 @@ struct Expect {
 
 
 fn main() {
-    let text = std::fs::read_to_string("./evm.json").unwrap();
+    let text = std::fs::read_to_string("./tests.json").unwrap();
     let data: Vec<Evmtest> = serde_json::from_str(&text).unwrap();
 
     let total = data.len();
 
+    let mut evm = EVM::new();
+
     for (index, test) in data.iter().enumerate() {
         println!("Test {} of {}: {}", index + 1, total, test.name);
 
-        let code: Vec<u8> = hex::decode(&test.code.bin).unwrap();
-
-        let result = evm(&code);
+        let result = evm.execute(&test.code.bin);
 
         let mut expected_stack: Vec<U256> = Vec::new();
         if let Some(ref stacks) = test.expect.stack {
@@ -80,3 +80,4 @@ fn main() {
     }
     println!("Congratulations!");
 }
+
