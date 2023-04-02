@@ -1,6 +1,9 @@
 use primitive_types::U256;
 
-use crate::{evm::EVM, utils::{is_negative, flip_sign, push_n}};
+use crate::{
+    evm::EVM,
+    utils::{flip_sign, is_negative, push_n},
+};
 
 // 0x00
 pub fn stop(_evm: &mut EVM) {}
@@ -105,7 +108,7 @@ pub fn s_modulo(evm: &mut EVM) {
 
     let is_a_negative = is_negative(&a);
     let is_n_negative = is_negative(&n);
-    
+
     // Recall that $$ka \equiv kb (\mod n)$$ for any integer $k$
     if is_a_negative {
         flip_sign(&mut a);
@@ -118,15 +121,13 @@ pub fn s_modulo(evm: &mut EVM) {
     match (is_a_negative, is_n_negative) {
         (false, false) => {
             evm.stack.push(result);
-        },
+        }
         // Consider an example where a = 10, n = -3 and flip such signs
         _ => {
             flip_sign(&mut result);
             evm.stack.push(result);
         }
     }
-
-    
 }
 
 // 0x08
@@ -141,6 +142,55 @@ pub fn add_mod(evm: &mut EVM) {
 pub fn mul_mod(evm: &mut EVM) {
     mul(evm);
     modulo(evm);
+}
+
+// 0x10
+pub fn lt(evm: &mut EVM) {
+    let a = evm.stack.pop().unwrap();
+    let b = evm.stack.pop().unwrap();
+
+    let result = if a < b { U256::from(1) } else { U256::from(0) };
+
+    evm.stack.push(result);
+}
+
+// 0x11
+pub fn gt(evm: &mut EVM) {
+    let a = evm.stack.pop().unwrap();
+    let b = evm.stack.pop().unwrap();
+
+    let result;
+    if a > b {
+        result = U256::from(1);
+    } else {
+        result = U256::from(0);
+    };
+
+    evm.stack.push(result);
+}
+
+// 0x12
+pub fn slt(evm: &mut EVM) {
+    let mut a = evm.stack.pop().unwrap();
+    let mut b = evm.stack.pop().unwrap();
+
+    let is_a_negative = is_negative(&a);
+    let is_b_negative = is_negative(&b);
+
+    let result: u8;
+    match (is_a_negative, is_b_negative) {
+        (true, false) => result = 1,
+        (false, true) => result = 0,
+        (false, false) => result = if a < b { 1 } else { 0 },
+        (true, true) => {
+            flip_sign(&mut a);
+            flip_sign(&mut b);
+            // now signs are flipped; we check the opposite
+            result = if a > b { 1 } else { 0 }
+        }
+    }
+
+    evm.stack.push(U256::from(result));
 }
 
 // 0xa
@@ -186,9 +236,7 @@ pub fn push_11(evm: &mut EVM) {
     push_n(evm, 11);
 }
 
-
 // 0x7f
 pub fn push_32(evm: &mut EVM) {
     push_n(evm, 32);
 }
-

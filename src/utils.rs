@@ -7,7 +7,7 @@ pub fn flip_sign(num: &mut U256) {
     *num = !*num + 1;
 }
 
-/// Check if the given number is negative according to 
+/// Check if the given number is negative according to
 /// its binary representation, looking at the MSB
 pub fn is_negative(num: &U256) -> bool {
     num.bit(255)
@@ -23,4 +23,14 @@ pub fn push_n(evm: &mut EVM, n: u8) {
     }
     let num = U256::from_str_radix(&str, 16).unwrap();
     evm.stack.push(num);
+}
+
+/// Generates the `n`th push function
+pub fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM) -> ()> {
+    if n > 32 {
+        panic!("ERROR: arg must be a number between 0 and 32 included")
+    }
+
+    let foo = Box::new(move |evm: &mut EVM| push_n(evm, n));
+    foo
 }

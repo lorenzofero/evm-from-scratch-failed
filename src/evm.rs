@@ -34,6 +34,9 @@ impl EVM {
         evm.opcodes_functions.insert(0x07, op_functions::s_modulo);
         evm.opcodes_functions.insert(0x08, op_functions::add_mod);
         evm.opcodes_functions.insert(0x09, op_functions::mul_mod);
+        evm.opcodes_functions.insert(0x10, op_functions::lt);
+        evm.opcodes_functions.insert(0x11, op_functions::gt);
+        evm.opcodes_functions.insert(0x12, op_functions::slt);
         evm.opcodes_functions.insert(0x0a, op_functions::exp);
         // evm.opcodes_functions.insert(0x0b, op_functions::sign_extend);
         evm.opcodes_functions.insert(0x50, op_functions::pop);
