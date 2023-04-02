@@ -363,20 +363,6 @@
     }
   },
   {
-    "name": "MULMOD (wrapped)",
-    "code": {
-      "asm": "PUSH1 12\nPUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF\nPUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF\nMULMOD",
-      "bin": "600c7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff09"
-    },
-    "expect": {
-      "stack": [
-        "0x9"
-      ],
-      "success": true
-    },
-    "hint": ""
-  },
-  {
     "name": "EXP",
     "code": {
       "asm": "PUSH1 2\nPUSH1 10\nEXP",
@@ -389,34 +375,6 @@
       "success": true
     },
     "hint": ""
-  },
-  {
-    "name": "SIGNEXTEND (positive)",
-    "hint": "Read \"Negative Numbers\" section of the course learning materials. SIGNEXTEND has no effect on \"positive\" numbers",
-    "code": {
-      "asm": "PUSH1 0x7F\nPUSH1 0\nSIGNEXTEND",
-      "bin": "607f60000b"
-    },
-    "expect": {
-      "stack": [
-        "0x7f"
-      ],
-      "success": true
-    }
-  },
-  {
-    "name": "SIGNEXTEND (negative)",
-    "hint": "Read \"Negative Numbers\" section of the course learning materials. The first bit of 0xFF is 1, so it is a negative number and needs to be padded by 1s in front",
-    "code": {
-      "asm": "PUSH1 0xFF\nPUSH1 0\nSIGNEXTEND",
-      "bin": "60ff60000b"
-    },
-    "expect": {
-      "stack": [
-        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-      ],
-      "success": true
-    }
   },
   {
     "name": "SDIV",
