@@ -1,8 +1,6 @@
-use std::ops::{BitAnd, BitXor};
-
 use primitive_types::U256;
 
-use crate::evm::EVM;
+use crate::{evm::EVM, utils::{is_negative, flip_sign}};
 
 // 0x00
 pub fn stop(_evm: &mut EVM) {}
@@ -48,21 +46,30 @@ pub fn s_div(evm: &mut EVM) {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
+    println!("(a, b) = ({}, {})", a, b);
+
     let zero = U256::zero();
     if b == zero {
         return evm.stack.push(zero);
     }
 
-    let is_a_negative = a.bit(255);
-    let is_b_negative = b.bit(255);
+    let is_a_negative = is_negative(a);
+    let is_b_negative = is_negative(b);
+
+    println!(
+        "(is_a_negative {}, is_b_negative {})",
+        is_a_negative, is_b_negative
+    );
 
     // make a and b positive
     if is_a_negative {
-        a = !a + 1;
+        flip_sign(&mut a);
     }
     if is_b_negative {
-        b = !b + 1;
+        flip_sign(&mut b);
     }
+
+    println!("(a, b) after transformation: ({}, {})", a, b);
 
     match (is_a_negative, is_b_negative) {
         (false, false) | (true, true) => evm.stack.push(a / b),
