@@ -1,4 +1,4 @@
-use evm_from_scratch::evm::EVM;
+use evm_from_scratch::evm::evm::EVM;
 use primitive_types::U256;
 use serde::Deserialize;
 

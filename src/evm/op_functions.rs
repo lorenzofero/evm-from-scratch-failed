@@ -1,9 +1,7 @@
+use crate::utils::utils::{is_negative, flip_sign};
 use primitive_types::U256;
 
-use crate::{
-    evm::EVM,
-    utils::{flip_sign, is_negative, push_n},
-};
+use super::evm::EVM;
 
 // 0x00
 pub fn stop(_evm: &mut EVM) {}
@@ -204,39 +202,4 @@ pub fn exp(evm: &mut EVM) {
 // 0x50
 pub fn pop(evm: &mut EVM) {
     evm.stack.pop();
-}
-
-// 0x60
-pub fn push_1(evm: &mut EVM) {
-    push_n(evm, 1);
-}
-
-// 0x61
-pub fn push_2(evm: &mut EVM) {
-    push_n(evm, 2);
-}
-
-// 0x63
-pub fn push_4(evm: &mut EVM) {
-    push_n(evm, 4);
-}
-
-// 0x65
-pub fn push_6(evm: &mut EVM) {
-    push_n(evm, 6);
-}
-
-// 0x69
-pub fn push_10(evm: &mut EVM) {
-    push_n(evm, 10);
-}
-
-// 0x6a
-pub fn push_11(evm: &mut EVM) {
-    push_n(evm, 11);
-}
-
-// 0x7f
-pub fn push_32(evm: &mut EVM) {
-    push_n(evm, 32);
 }
