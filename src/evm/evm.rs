@@ -1,6 +1,6 @@
 use primitive_types::U256;
 
-use crate::utils::utils::get_opcode_functions;
+use crate::utils::{logger::Logger, utils::get_opcode_functions};
 
 pub struct EvmResult {
     pub stack: Vec<U256>,
@@ -11,6 +11,10 @@ pub struct EVM {
     pub stack: Vec<U256>,
     pub pc: usize,
     pub execution_bytecode: Vec<u8>,
+}
+
+impl<'a> Logger<'a> for EVM {
+    const NAMESPACE: &'a str = "EVM";
 }
 
 impl EVM {
