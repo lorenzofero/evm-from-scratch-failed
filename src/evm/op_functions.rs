@@ -1,5 +1,6 @@
-use crate::utils::utils::{is_negative, flip_sign};
 use primitive_types::U256;
+
+use crate::utils::utils::{is_negative, flip_sign};
 
 use super::evm::EVM;
 
