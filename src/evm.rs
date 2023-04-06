@@ -1,6 +1,9 @@
-use primitive_types::U256;
+pub mod op_functions;
+pub mod utils;
 
-use crate::utils::{logger::Logger, utils::get_opcode_functions};
+use crate::utils::logger::Logger;
+use primitive_types::U256;
+use self::utils::get_opcode_functions;
 
 pub struct EvmResult {
     pub stack: Vec<U256>,
@@ -47,7 +50,7 @@ impl EVM {
             }
 
             let op_function = opcode_functions.get(&opcode).expect(&format!(
-                "Could not find function associated to opcode {}",
+                "Could not find function associated to opcode {:x}",
                 opcode
             ));
 

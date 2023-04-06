@@ -1,11 +1,9 @@
-use std::collections::HashMap;
-
+use crate::{
+    evm::{op_functions, EVM},
+    utils::types::OpcodeFunctions,
+};
 use primitive_types::U256;
-
-use crate::evm::{evm::EVM, op_functions};
-
-use super::types::OpcodeFunctions;
-
+use std::collections::HashMap;
 
 /// Flips the sign of a number using two's complement
 pub fn flip_sign(num: &mut U256) {
@@ -43,19 +41,22 @@ pub fn get_opcode_functions() -> OpcodeFunctions {
     let mut opcode_functions: OpcodeFunctions = HashMap::new();
 
     opcode_functions.insert(0x00, Box::new(op_functions::stop));
-    opcode_functions.insert(0x01, Box::new(op_functions::add));
-    opcode_functions.insert(0x02, Box::new(op_functions::mul));
-    opcode_functions.insert(0x03, Box::new(op_functions::sub));
-    opcode_functions.insert(0x04, Box::new(op_functions::div));
-    opcode_functions.insert(0x05, Box::new(op_functions::s_div));
-    opcode_functions.insert(0x06, Box::new(op_functions::modulo));
-    opcode_functions.insert(0x07, Box::new(op_functions::s_modulo));
-    opcode_functions.insert(0x08, Box::new(op_functions::add_mod));
-    opcode_functions.insert(0x09, Box::new(op_functions::mul_mod));
-    opcode_functions.insert(0x10, Box::new(op_functions::lt));
-    opcode_functions.insert(0x11, Box::new(op_functions::gt));
-    opcode_functions.insert(0x12, Box::new(op_functions::slt));
-    opcode_functions.insert(0x0a, Box::new(op_functions::exp));
+    opcode_functions.insert(0x01, Box::new(op_functions::arithmetic::add));
+    opcode_functions.insert(0x02, Box::new(op_functions::arithmetic::mul));
+    opcode_functions.insert(0x03, Box::new(op_functions::arithmetic::sub));
+    opcode_functions.insert(0x04, Box::new(op_functions::arithmetic::div));
+    opcode_functions.insert(0x05, Box::new(op_functions::arithmetic::s_div));
+    opcode_functions.insert(0x06, Box::new(op_functions::arithmetic::modulo));
+    opcode_functions.insert(0x07, Box::new(op_functions::arithmetic::s_modulo));
+    opcode_functions.insert(0x08, Box::new(op_functions::arithmetic::add_mod));
+    opcode_functions.insert(0x09, Box::new(op_functions::arithmetic::mul_mod));
+    opcode_functions.insert(0x10, Box::new(op_functions::arithmetic::lt));
+    opcode_functions.insert(0x11, Box::new(op_functions::arithmetic::gt));
+    opcode_functions.insert(0x12, Box::new(op_functions::arithmetic::slt));
+    opcode_functions.insert(0x13, Box::new(op_functions::arithmetic::sgt));
+    opcode_functions.insert(0x14, Box::new(op_functions::arithmetic::eq));
+    opcode_functions.insert(0x15, Box::new(op_functions::arithmetic::is_zero));
+    opcode_functions.insert(0x0a, Box::new(op_functions::arithmetic::exp));
     // opcode_functions.insert(0x0b, Box::new(op_functions::sign_extend));
     opcode_functions.insert(0x50, Box::new(op_functions::pop));
 
