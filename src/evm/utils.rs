@@ -1,5 +1,5 @@
 use crate::{
-    evm::{op_functions, EVM},
+    evm::{opcodes, EVM},
     utils::types::OpcodeFunctions,
 };
 use primitive_types::U256;
@@ -16,19 +16,21 @@ pub fn is_negative(num: &U256) -> bool {
     num.bit(255)
 }
 
-/// Reads the first `n` bytes and push it to the stack
 pub fn push_n(evm: &mut EVM, n: u8) {
     let mut str = String::new();
     for _i in 1..=n {
         let byte = evm.execution_bytecode.get(evm.pc).expect("Missing data");
-        str.push_str(&format!("{:x}", byte));
+        if byte <= &u8::from(9) {
+            str.push_str(&format!("0{}", byte));
+        } else {
+            str.push_str(&format!("{:x}", byte));
+        }
         evm.pc += 1;
     }
     let num = U256::from_str_radix(&str, 16).unwrap();
     evm.stack.push(num);
 }
 
-/// Generates the `n`th push function
 pub fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM) -> ()> {
     if n > 32 {
         panic!("ERROR: arg must be a number between 0 and 32 included")
@@ -37,36 +39,47 @@ pub fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM) -> ()> {
     Box::new(move |evm: &mut EVM| push_n(evm, n))
 }
 
-pub fn get_opcode_functions() -> OpcodeFunctions {
-    let mut opcode_functions: OpcodeFunctions = HashMap::new();
+// It'd better to have them static. See PHF crate.
+pub fn get_opcodes() -> OpcodeFunctions {
+    let mut opcodes: OpcodeFunctions = HashMap::new();
 
-    opcode_functions.insert(0x00, Box::new(op_functions::stop));
-    opcode_functions.insert(0x01, Box::new(op_functions::arithmetic::add));
-    opcode_functions.insert(0x02, Box::new(op_functions::arithmetic::mul));
-    opcode_functions.insert(0x03, Box::new(op_functions::arithmetic::sub));
-    opcode_functions.insert(0x04, Box::new(op_functions::arithmetic::div));
-    opcode_functions.insert(0x05, Box::new(op_functions::arithmetic::s_div));
-    opcode_functions.insert(0x06, Box::new(op_functions::arithmetic::modulo));
-    opcode_functions.insert(0x07, Box::new(op_functions::arithmetic::s_modulo));
-    opcode_functions.insert(0x08, Box::new(op_functions::arithmetic::add_mod));
-    opcode_functions.insert(0x09, Box::new(op_functions::arithmetic::mul_mod));
-    opcode_functions.insert(0x10, Box::new(op_functions::arithmetic::lt));
-    opcode_functions.insert(0x11, Box::new(op_functions::arithmetic::gt));
-    opcode_functions.insert(0x12, Box::new(op_functions::arithmetic::slt));
-    opcode_functions.insert(0x13, Box::new(op_functions::arithmetic::sgt));
-    opcode_functions.insert(0x14, Box::new(op_functions::arithmetic::eq));
-    opcode_functions.insert(0x15, Box::new(op_functions::arithmetic::is_zero));
-    opcode_functions.insert(0x0a, Box::new(op_functions::arithmetic::exp));
-    // opcode_functions.insert(0x0b, Box::new(op_functions::sign_extend));
-    opcode_functions.insert(0x50, Box::new(op_functions::pop));
+    opcodes.insert(0x00, Box::new(opcodes::stop));
+    opcodes.insert(0x01, Box::new(opcodes::arithmetic::add));
+    opcodes.insert(0x02, Box::new(opcodes::arithmetic::mul));
+    opcodes.insert(0x03, Box::new(opcodes::arithmetic::sub));
+    opcodes.insert(0x04, Box::new(opcodes::arithmetic::div));
+    opcodes.insert(0x05, Box::new(opcodes::arithmetic::s_div));
+    opcodes.insert(0x06, Box::new(opcodes::arithmetic::modulo));
+    opcodes.insert(0x07, Box::new(opcodes::arithmetic::s_modulo));
+    opcodes.insert(0x08, Box::new(opcodes::arithmetic::add_mod));
+    opcodes.insert(0x09, Box::new(opcodes::arithmetic::mul_mod));
 
-    insert_push_n_functions(&mut opcode_functions);
+    opcodes.insert(0x10, Box::new(opcodes::logic::lt));
+    opcodes.insert(0x11, Box::new(opcodes::logic::gt));
+    opcodes.insert(0x12, Box::new(opcodes::logic::slt));
+    opcodes.insert(0x13, Box::new(opcodes::logic::sgt));
+    opcodes.insert(0x14, Box::new(opcodes::logic::eq));
+    opcodes.insert(0x15, Box::new(opcodes::logic::is_zero));
+    opcodes.insert(0x16, Box::new(opcodes::logic::and));
+    opcodes.insert(0x17, Box::new(opcodes::logic::or));
+    opcodes.insert(0x18, Box::new(opcodes::logic::xor));
+    opcodes.insert(0x19, Box::new(opcodes::logic::not));
 
-    opcode_functions
+    opcodes.insert(0x1b, Box::new(opcodes::misc::shl));
+    opcodes.insert(0x1c, Box::new(opcodes::misc::shr));
+    opcodes.insert(0x1d, Box::new(opcodes::misc::sar));
+
+    opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
+    // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
+    opcodes.insert(0x50, Box::new(opcodes::pop));
+
+    insert_push_n_functions(&mut opcodes);
+
+    opcodes
 }
 
-pub fn insert_push_n_functions(opcode_functions: &mut OpcodeFunctions) {
+pub fn insert_push_n_functions(opcodes: &mut OpcodeFunctions) {
     for n in 1..=32 {
-        opcode_functions.insert(0x5f + n, generate_push_n_fn(n));
+        opcodes.insert(0x5f + n, generate_push_n_fn(n));
     }
 }

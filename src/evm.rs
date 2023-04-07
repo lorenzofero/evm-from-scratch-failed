@@ -1,15 +1,16 @@
-pub mod op_functions;
+pub mod opcodes;
 pub mod utils;
 
+use self::utils::get_opcodes;
 use crate::utils::logger::Logger;
 use primitive_types::U256;
-use self::utils::get_opcode_functions;
 
 pub struct EvmResult {
     pub stack: Vec<U256>,
     pub success: bool,
 }
 
+#[derive(Debug)]
 pub struct EVM {
     pub stack: Vec<U256>,
     pub pc: usize,
@@ -31,30 +32,29 @@ impl EVM {
         evm
     }
 
-    /// Executes the given hex bytecode string, and cleans the stack and
-    /// pc before returning `EvmResult`.
     pub fn execute(self: &mut Self, bytecode: &str) -> EvmResult {
-        // TODO: in this way, for each execution opcodes are created.
-        let opcode_functions = get_opcode_functions();
+        let opcodes = get_opcodes();
         self.execution_bytecode = hex::decode(bytecode).unwrap();
+        
+        EVM::debug(&format!("Execution bytecode: {:x?}", self.execution_bytecode));
 
         while self.pc < self.execution_bytecode.len() {
-            let opcode = self
+            let opcode_num = self
                 .execution_bytecode
                 .get(self.pc)
                 .expect("Could not read bytecode");
             self.pc += 1;
 
-            if *opcode == 0 {
+            if *opcode_num == 0 {
                 break;
             }
 
-            let op_function = opcode_functions.get(&opcode).expect(&format!(
-                "Could not find function associated to opcode {:x}",
-                opcode
+            let opcode = opcodes.get(&opcode_num).expect(&format!(
+                "Could not find function associated to opcode_num {:x}",
+                opcode_num
             ));
 
-            op_function(self);
+            opcode(self);
         }
 
         let result = self.get_result();

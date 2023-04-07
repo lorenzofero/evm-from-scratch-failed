@@ -35,3 +35,12 @@ The main characteristics of the **EVM** are:
 - does not follow the standard von Neumann architecture. Rather than storing program code in generally-accessible memory or storage, it is stored separately in a virtual ROM interactable only through specialised instruction.
 
 
+
+# The making of
+This section describes some thoughts I had while implementing the EVM in Rust:
+- One of my first achievements was to call the opcodes dynamically using an unsigned integer as 'key'. This has been quite difficult but I learned a lot about `HashMap`, closures and how to store them
+- Writing classic OOP in Rust is quite a pain and should be avoided, but at the same times it shows you all the problems of this paradigm regarding ownership and mutability in a non-GC language. Also, I didn't want to mess around with `RefCell` and `Cell` for the moment, and keep it everything as clean as possible. In order to do that, you have to carefully think what you really need as a property of your struct, and what can be done in an easier and clear functional/procedural style.
+- I'm not 100% with Rust module tree, and I don't like very much how the project tree is. Maybe it will change with time.
+
+
+
