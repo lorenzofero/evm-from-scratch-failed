@@ -40,12 +40,12 @@ fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
 }
 
 fn dup_n(evm: &mut EVM, n: u8) {
-    let mut temp_memory: Vec<U256> = Vec::with_capacity(usize::from(n));
+    let mut temp_stack: Vec<U256> = Vec::with_capacity(usize::from(n));
 
     // pop until we find the value to duplicate
     for _i in 1..n {
         let val = evm.stack.pop().unwrap();
-        temp_memory.push(val);
+        temp_stack.push(val);
     }
 
     let val_to_dup = evm.stack.pop().unwrap();
@@ -53,7 +53,7 @@ fn dup_n(evm: &mut EVM, n: u8) {
 
     // fill the stack back
     for _i in 1..n {
-        let val = temp_memory.pop().unwrap();
+        let val = temp_stack.pop().unwrap();
         evm.stack.push(val);
     }
 
@@ -69,34 +69,28 @@ fn generate_dup_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
     Box::new(move |evm: &mut EVM| dup_n(evm, n))
 }
 
-
 /// todo this is not good yet
 fn swap_n(evm: &mut EVM, n: u8) {
-    EVM::debug(&format!("evm stack {:?}", evm.stack));
-    let mut temp_memory: Vec<U256> = Vec::with_capacity(usize::from(n));
+    let mut temp_stack: Vec<U256> = Vec::with_capacity(usize::from(n));
+    let first_val = evm.stack.pop().unwrap();
 
     // pop until we find the value to swap
-    for _i in 1..=n {
+    for _i in 1..n {
         let val = evm.stack.pop().unwrap();
-        temp_memory.push(val);
+        temp_stack.push(val);
     }
 
-    EVM::debug(&format!("evm stack {:?}", evm.stack));
-    EVM::debug(&format!("temp memory {:?}", temp_memory));
+    let last_val = evm.stack.pop().unwrap();
 
-    let val_to_swap = evm.stack.pop().unwrap(); // 1
-    EVM::debug(&format!("val_to_swap {}", val_to_swap));
-    EVM::debug(&format!("evm stack {:?}", evm.stack));
+    evm.stack.push(first_val);
 
     // fill the stack back
-    for _i in 1..=n {
-        let val = temp_memory.pop().unwrap();
+    for _i in 1..n {
+        let val = temp_stack.pop().unwrap();
         evm.stack.push(val);
     }
 
-    evm.stack.push(val_to_swap);
-    EVM::debug(&format!("evm stack {:?}", evm.stack));
-
+    evm.stack.push(last_val);
 }
 
 fn generate_swap_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
