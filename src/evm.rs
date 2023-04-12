@@ -35,8 +35,6 @@ impl EVM {
     pub fn execute(self: &mut Self, bytecode: &str) -> EvmResult {
         let opcodes = get_opcodes();
         self.execution_bytecode = hex::decode(bytecode).unwrap();
-        
-        EVM::debug(&format!("Execution bytecode: {:x?}", self.execution_bytecode));
 
         while self.pc < self.execution_bytecode.len() {
             let opcode_num = self

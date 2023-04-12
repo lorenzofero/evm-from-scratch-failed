@@ -31,6 +31,7 @@ fn main() {
 
     let mut evm = EVM::new();
 
+
     for (index, test) in data.iter().enumerate() {
         println!("Test {} of {}: {}", index + 1, total, test.name);
 
