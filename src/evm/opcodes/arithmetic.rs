@@ -1,35 +1,42 @@
 use crate::evm::utils::flip_sign;
 use crate::evm::utils::is_negative;
+use crate::utils::types::NextAction;
 use primitive_types::U256;
 
 use crate::evm::EVM;
 
 // 0x01
-pub fn add(evm: &mut EVM) {
+pub fn add(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     let (sum, _flag) = a.overflowing_add(b);
     evm.stack.push(sum);
+
+    NextAction::Continue
 }
 
 // 0x02
-pub fn mul(evm: &mut EVM) {
+pub fn mul(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     let (mul, _flag) = a.overflowing_mul(b);
     evm.stack.push(mul);
+
+    NextAction::Continue
 }
 
 // 0x03
-pub fn sub(evm: &mut EVM) {
+pub fn sub(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     let (sub, _flag) = a.overflowing_sub(b);
     evm.stack.push(sub);
+
+    NextAction::Continue
 }
 
 // 0x04
-pub fn div(evm: &mut EVM) {
+pub fn div(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     let zero = U256::zero();
@@ -38,16 +45,19 @@ pub fn div(evm: &mut EVM) {
     } else {
         evm.stack.push(a / b);
     }
+
+    NextAction::Continue
 }
 
 // 0x05
-pub fn s_div(evm: &mut EVM) {
+pub fn s_div(evm: &mut EVM) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
     let zero = U256::zero();
     if b == zero {
-        return evm.stack.push(zero);
+        evm.stack.push(zero);
+        return NextAction::Continue;
     }
 
     let is_a_negative = is_negative(&a);
@@ -69,10 +79,12 @@ pub fn s_div(evm: &mut EVM) {
             evm.stack.push(div);
         }
     }
+
+    NextAction::Continue
 }
 
 // 0x06
-pub fn modulo(evm: &mut EVM) {
+pub fn modulo(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let n = evm.stack.pop().unwrap();
     let zero = U256::zero();
@@ -81,16 +93,19 @@ pub fn modulo(evm: &mut EVM) {
     } else {
         evm.stack.push(a % n);
     }
+
+    NextAction::Continue
 }
 
 // 0x07
-pub fn s_modulo(evm: &mut EVM) {
+pub fn s_modulo(evm: &mut EVM) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut n = evm.stack.pop().unwrap();
 
     let zero = U256::zero();
     if n == zero {
-        return evm.stack.push(zero);
+        evm.stack.push(zero);
+        return NextAction::Continue;
     }
 
     let is_a_negative = is_negative(&a);
@@ -115,26 +130,34 @@ pub fn s_modulo(evm: &mut EVM) {
             evm.stack.push(result);
         }
     }
+
+    NextAction::Continue
 }
 
 // 0x08
-pub fn add_mod(evm: &mut EVM) {
+pub fn add_mod(evm: &mut EVM) -> NextAction {
     add(evm);
     modulo(evm);
+
+    NextAction::Continue
 }
 
 // 0x09
 /// May have some problems with very big numbers
 /// due to `primitive_types::U256`.
-pub fn mul_mod(evm: &mut EVM) {
+pub fn mul_mod(evm: &mut EVM) -> NextAction {
     mul(evm);
     modulo(evm);
+
+    NextAction::Continue
 }
 
 // 0xa
-pub fn exp(evm: &mut EVM) {
+pub fn exp(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     let (res, _flag) = a.overflowing_pow(b);
     evm.stack.push(res);
+
+    NextAction::Continue
 }

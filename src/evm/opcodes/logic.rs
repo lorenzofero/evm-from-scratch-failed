@@ -2,20 +2,28 @@ use std::ops::{BitAnd, BitOr, BitXor};
 
 use primitive_types::U256;
 
-use crate::evm::{EVM, utils::{is_negative, flip_sign}};
+use crate::{
+    evm::{
+        utils::{flip_sign, is_negative},
+        EVM,
+    },
+    utils::types::NextAction,
+};
 
 // 0x10
-pub fn lt(evm: &mut EVM) {
+pub fn lt(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
     let result = if a < b { U256::from(1) } else { U256::from(0) };
 
     evm.stack.push(result);
+
+    NextAction::Continue
 }
 
 // 0x11
-pub fn gt(evm: &mut EVM) {
+pub fn gt(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
@@ -27,10 +35,12 @@ pub fn gt(evm: &mut EVM) {
     };
 
     evm.stack.push(result);
+
+    NextAction::Continue
 }
 
 // 0x12
-pub fn slt(evm: &mut EVM) {
+pub fn slt(evm: &mut EVM) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
@@ -51,10 +61,12 @@ pub fn slt(evm: &mut EVM) {
     }
 
     evm.stack.push(U256::from(result));
+
+    NextAction::Continue
 }
 
 // 0x13
-pub fn sgt(evm: &mut EVM) {
+pub fn sgt(evm: &mut EVM) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
@@ -75,46 +87,60 @@ pub fn sgt(evm: &mut EVM) {
     }
 
     evm.stack.push(U256::from(result));
+
+    NextAction::Continue
 }
 
 // 0x14
-pub fn eq(evm: &mut EVM) {
+pub fn eq(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
     let result = if a == b { 1 } else { 0 };
     evm.stack.push(U256::from(result));
+
+    NextAction::Continue
 }
 
 // 0x15
-pub fn is_zero(evm: &mut EVM) {
+pub fn is_zero(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let result = if a.is_zero() { 1 } else { 0 };
     evm.stack.push(U256::from(result));
+
+    NextAction::Continue
 }
 
 // 0x15
-pub fn not(evm: &mut EVM) {
+pub fn not(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     evm.stack.push(!a);
+
+    NextAction::Continue
 }
 
 // 0x16
-pub fn and(evm: &mut EVM) {
+pub fn and(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
-    evm.stack.push(a.bitand(b))
+    evm.stack.push(a.bitand(b));
+
+    NextAction::Continue
 }
 
 // 0x17
-pub fn or(evm: &mut EVM) {
+pub fn or(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     evm.stack.push(a.bitor(b));
+
+    NextAction::Continue
 }
 
-pub fn xor(evm: &mut EVM) {
+pub fn xor(evm: &mut EVM) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     evm.stack.push(a.bitxor(b));
+
+    NextAction::Continue
 }

@@ -2,7 +2,7 @@ pub mod opcodes;
 pub mod utils;
 
 use self::utils::get_opcodes;
-use crate::utils::logger::Logger;
+use crate::utils::{logger::Logger, types::NextAction};
 use primitive_types::U256;
 
 pub struct EvmResult {
@@ -36,6 +36,8 @@ impl EVM {
         let opcodes = get_opcodes();
         self.execution_bytecode = hex::decode(bytecode).unwrap();
 
+        let mut success = true;
+
         while self.pc < self.execution_bytecode.len() {
             let opcode_num = self
                 .execution_bytecode
@@ -43,19 +45,21 @@ impl EVM {
                 .expect("Could not read bytecode");
             self.pc += 1;
 
-            if *opcode_num == 0 {
-                break;
-            }
-
             let opcode = opcodes.get(&opcode_num).expect(&format!(
                 "Could not find function associated to opcode_num {:x}",
                 opcode_num
             ));
 
-            opcode(self);
+            let next_action = opcode(self);
+
+            if let NextAction::Exit(status_code) = next_action {
+                success = status_code == 0;
+                EVM::warning(&format!("Exiting with status code {}", status_code));
+                break;
+            }
         }
 
-        let result = self.get_result();
+        let result = self.get_result(success);
         self.reset();
 
         result
@@ -66,13 +70,13 @@ impl EVM {
         self.stack.clear();
     }
 
-    fn get_result(&self) -> EvmResult {
+    fn get_result(&self, success: bool) -> EvmResult {
         let mut clone = self.stack.clone();
         clone.reverse();
 
         EvmResult {
             stack: clone,
-            success: true,
+            success,
         }
     }
 }

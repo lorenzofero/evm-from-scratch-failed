@@ -1,6 +1,9 @@
 use crate::{
     evm::{opcodes, EVM},
-    utils::{logger::Logger, types::OpcodeFunctions},
+    utils::{
+        logger::Logger,
+        types::{NextAction, Opcode, Opcodes},
+    },
 };
 use primitive_types::U256;
 use std::collections::HashMap;
@@ -16,7 +19,7 @@ pub fn is_negative(num: &U256) -> bool {
     num.bit(255)
 }
 
-fn push_n(evm: &mut EVM, n: u8) {
+fn push_n(evm: &mut EVM, n: u8) -> NextAction {
     let mut str = String::new();
     for _i in 1..=n {
         let byte = evm.execution_bytecode.get(evm.pc).expect("Missing data");
@@ -29,9 +32,11 @@ fn push_n(evm: &mut EVM, n: u8) {
     }
     let num = U256::from_str_radix(&str, 16).unwrap();
     evm.stack.push(num);
+
+    NextAction::Continue
 }
 
-fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
+fn generate_push_n_fn(n: u8) -> Opcode {
     if n > 32 {
         panic!("ERROR: arg must be a number between 0 and 32 included")
     }
@@ -39,7 +44,7 @@ fn generate_push_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
     Box::new(move |evm: &mut EVM| push_n(evm, n))
 }
 
-fn dup_n(evm: &mut EVM, n: u8) {
+fn dup_n(evm: &mut EVM, n: u8) -> NextAction {
     let mut temp_stack: Vec<U256> = Vec::with_capacity(usize::from(n));
 
     // pop until we find the value to duplicate
@@ -58,9 +63,11 @@ fn dup_n(evm: &mut EVM, n: u8) {
     }
 
     evm.stack.push(val_to_dup);
+
+    NextAction::Continue
 }
 
-fn generate_dup_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
+fn generate_dup_n_fn(n: u8) -> Opcode {
     if n == 0 || n > 16 {
         EVM::error("Invalid N value for DUP N: it must be between 0 and 16 excluded");
         panic!();
@@ -70,7 +77,7 @@ fn generate_dup_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
 }
 
 /// todo this is not good yet
-fn swap_n(evm: &mut EVM, n: u8) {
+fn swap_n(evm: &mut EVM, n: u8) -> NextAction {
     let mut temp_stack: Vec<U256> = Vec::with_capacity(usize::from(n));
     let first_val = evm.stack.pop().unwrap();
 
@@ -91,9 +98,11 @@ fn swap_n(evm: &mut EVM, n: u8) {
     }
 
     evm.stack.push(last_val);
+
+    NextAction::Continue
 }
 
-fn generate_swap_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
+fn generate_swap_n_fn(n: u8) -> Opcode {
     if n == 0 || n > 16 {
         EVM::error("Invalid N value for SWAP N: it must be between 0 and 16 excluded");
         panic!();
@@ -103,8 +112,8 @@ fn generate_swap_n_fn(n: u8) -> Box<dyn Fn(&mut EVM)> {
 }
 
 // It'd better to have them static. See PHF crate.
-pub fn get_opcodes() -> OpcodeFunctions {
-    let mut opcodes: OpcodeFunctions = HashMap::new();
+pub fn get_opcodes() -> Opcodes {
+    let mut opcodes: Opcodes = HashMap::new();
 
     opcodes.insert(0x00, Box::new(opcodes::stop));
     opcodes.insert(0x01, Box::new(opcodes::arithmetic::add));
@@ -144,19 +153,19 @@ pub fn get_opcodes() -> OpcodeFunctions {
     opcodes
 }
 
-fn insert_push_n_functions(opcodes: &mut OpcodeFunctions) {
+fn insert_push_n_functions(opcodes: &mut Opcodes) {
     for n in 1..=32 {
         opcodes.insert(0x5f + n, generate_push_n_fn(n));
     }
 }
 
-fn insert_dup_n_functions(opcodes: &mut OpcodeFunctions) {
+fn insert_dup_n_functions(opcodes: &mut Opcodes) {
     for n in 1..=16 {
         opcodes.insert(0x7f + n, generate_dup_n_fn(n));
     }
 }
 
-fn insert_swap_n_functions(opcodes: &mut OpcodeFunctions) {
+fn insert_swap_n_functions(opcodes: &mut Opcodes) {
     for n in 1..=16 {
         opcodes.insert(0x8f + n, generate_swap_n_fn(n));
     }
