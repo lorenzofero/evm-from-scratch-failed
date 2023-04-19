@@ -62,3 +62,8 @@ pub fn byte(evm: &mut EVM) -> NextAction {
 
     NextAction::Continue
 }
+
+// 0xfe
+pub fn invalid(_evm: &mut EVM) -> NextAction {
+    NextAction::Exit(1)
+}

@@ -150,6 +150,8 @@ pub fn get_opcodes() -> Opcodes {
     insert_dup_n_functions(&mut opcodes);
     insert_swap_n_functions(&mut opcodes);
 
+    opcodes.insert(0xfe, Box::new(opcodes::misc::invalid));
+
     opcodes
 }
 
