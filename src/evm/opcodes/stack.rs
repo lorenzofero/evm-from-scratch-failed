@@ -1,6 +1,9 @@
 use primitive_types::U256;
 
-use crate::{evm::EVM, utils::types::NextAction};
+use crate::{
+    evm::{utils::is_pc_on_jumpdest, EVM},
+    utils::types::NextAction,
+};
 
 // 0x50
 pub fn pop(evm: &mut EVM) -> NextAction {
@@ -14,7 +17,31 @@ pub fn jump(evm: &mut EVM) -> NextAction {
 
     evm.pc = new_pc;
 
-    NextAction::Continue
+    if is_pc_on_jumpdest(evm) {
+        NextAction::Continue
+    } else {
+        // TODO: maybe another status code for this?
+        NextAction::Exit(1)
+    }
+}
+
+// 0x57
+pub fn jumpi(evm: &mut EVM) -> NextAction {
+    let new_pc = evm.stack.pop().unwrap().as_usize();
+    let condition = evm.stack.pop().unwrap();
+
+    if !condition.is_zero() {
+        evm.pc = new_pc;
+    } else {
+        return NextAction::Continue;
+    }
+
+    if is_pc_on_jumpdest(evm) {
+        NextAction::Continue
+    } else {
+        // TODO: maybe another status code for this?
+        NextAction::Exit(1)
+    }
 }
 
 // 0x58

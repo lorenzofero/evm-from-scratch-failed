@@ -1,7 +1,8 @@
+pub mod constants;
 pub mod opcodes;
 pub mod utils;
 
-use self::utils::get_opcodes;
+use self::utils::{get_jumpdests, get_opcodes};
 use crate::utils::{logger::Logger, types::NextAction};
 use primitive_types::U256;
 
@@ -14,7 +15,9 @@ pub struct EvmResult {
 pub struct EVM {
     pub stack: Vec<U256>,
     pub pc: usize,
+    // TODO: execution stuff should be in its own struct
     pub execution_bytecode: Vec<u8>,
+    pub jumpdests: Vec<usize>,
 }
 
 impl<'a> Logger<'a> for EVM {
@@ -27,6 +30,7 @@ impl EVM {
             stack: Vec::with_capacity(1024),
             pc: 0,
             execution_bytecode: Vec::new(),
+            jumpdests: Vec::new(),
         };
 
         evm
@@ -35,6 +39,9 @@ impl EVM {
     pub fn execute(self: &mut Self, bytecode: &str) -> EvmResult {
         let opcodes = get_opcodes();
         self.execution_bytecode = hex::decode(bytecode).unwrap();
+        self.jumpdests = get_jumpdests(&self.execution_bytecode);
+
+        EVM::debug(&format!("jumpdests {:x?}", self.jumpdests));
 
         let mut success = true;
 

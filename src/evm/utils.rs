@@ -8,6 +8,8 @@ use crate::{
 use primitive_types::U256;
 use std::collections::HashMap;
 
+use super::constants::JUMPDEST;
+
 /// Flips the sign of a number using two's complement
 pub fn flip_sign(num: &mut U256) {
     *num = !*num + 1;
@@ -146,6 +148,7 @@ pub fn get_opcodes() -> Opcodes {
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
     opcodes.insert(0x50, Box::new(opcodes::stack::pop));
     opcodes.insert(0x56, Box::new(opcodes::stack::jump));
+    opcodes.insert(0x57, Box::new(opcodes::stack::jumpi));
     opcodes.insert(0x58, Box::new(opcodes::stack::pc));
     opcodes.insert(0x5a, Box::new(opcodes::misc::gas));
     opcodes.insert(0x5b, Box::new(opcodes::stack::jumpdest));
@@ -174,5 +177,37 @@ fn insert_dup_n_functions(opcodes: &mut Opcodes) {
 fn insert_swap_n_functions(opcodes: &mut Opcodes) {
     for n in 1..=16 {
         opcodes.insert(0x8f + n, generate_swap_n_fn(n));
+    }
+}
+
+/// Reads the `execution_bytecode` and returns a vector with all
+/// the indexes in which a jumpdest occurs. This vector naturally is sorted.
+///
+/// Computational cost: O(n), where `n` is the length of the bytecode
+pub fn get_jumpdests(execution_bytecode: &Vec<u8>) -> Vec<usize> {
+    let mut pc = 0;
+    let mut jumpdests: Vec<usize> = Vec::new();
+
+    while pc < execution_bytecode.len() {
+        let opcode = execution_bytecode.get(pc).unwrap();
+
+        if &0x60 <= opcode && opcode <= &0x7f {
+            let offset = opcode - 0x60 + 1;
+            pc += usize::from(offset);
+        } else if opcode == &JUMPDEST {
+            jumpdests.push(pc);
+        }
+
+        pc += 1;
+    }
+
+    jumpdests
+}
+
+pub fn is_pc_on_jumpdest(evm: &EVM) -> bool {
+    if evm.jumpdests.binary_search(&evm.pc).is_ok() {
+        true
+    } else {
+        false
     }
 }
