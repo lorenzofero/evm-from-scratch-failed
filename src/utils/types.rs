@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::evm::EVM;
 
+#[derive(Debug)]
 pub enum NextAction {
     Continue,
     Exit(u8),

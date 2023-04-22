@@ -144,9 +144,11 @@ pub fn get_opcodes() -> Opcodes {
 
     opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
-    opcodes.insert(0x50, Box::new(opcodes::pop));
-    opcodes.insert(0x58, Box::new(opcodes::misc::pc));
+    opcodes.insert(0x50, Box::new(opcodes::stack::pop));
+    opcodes.insert(0x56, Box::new(opcodes::stack::jump));
+    opcodes.insert(0x58, Box::new(opcodes::stack::pc));
     opcodes.insert(0x5a, Box::new(opcodes::misc::gas));
+    opcodes.insert(0x5b, Box::new(opcodes::stack::jumpdest));
 
     insert_push_n_functions(&mut opcodes);
     insert_dup_n_functions(&mut opcodes);

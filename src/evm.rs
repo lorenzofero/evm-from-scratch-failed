@@ -43,6 +43,7 @@ impl EVM {
                 .execution_bytecode
                 .get(self.pc)
                 .expect("Could not read bytecode");
+
             self.pc += 1;
 
             let opcode = opcodes.get(&opcode_num).expect(&format!(
@@ -52,10 +53,13 @@ impl EVM {
 
             let next_action = opcode(self);
 
-            if let NextAction::Exit(status_code) = next_action {
-                success = status_code == 0;
-                EVM::warning(&format!("Exiting with status code {}", status_code));
-                break;
+            match next_action {
+                NextAction::Exit(status_code) => {
+                    success = status_code == 0;
+                    EVM::warning(&format!("Exiting with status code {}", status_code));
+                    break;
+                }
+                _ => {}
             }
         }
 

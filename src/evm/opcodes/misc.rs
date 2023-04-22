@@ -63,12 +63,6 @@ pub fn byte(evm: &mut EVM) -> NextAction {
     NextAction::Continue
 }
 
-// 0x58
-pub fn pc(evm: &mut EVM) -> NextAction {
-    evm.stack.push(U256::from(evm.pc - 1));
-    NextAction::Continue
-}
-
 // 0x5a
 /// This is not supported yet, it returns `U256::MAX`
 pub fn gas(evm: &mut EVM) -> NextAction {
