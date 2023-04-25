@@ -1,6 +1,6 @@
 use primitive_types::U256;
 
-use crate::{evm::EVM, utils::types::NextAction};
+use crate::{evm::{EVM, utils::update_msize}, utils::types::NextAction};
 
 // 0x51
 pub fn mload(evm: &mut EVM) -> NextAction {
@@ -21,6 +21,8 @@ pub fn mload(evm: &mut EVM) -> NextAction {
     let val = U256::from_str_radix(&str, 16).unwrap();
     evm.stack.push(val);
 
+    update_msize(evm, offset, false);
+
     NextAction::Continue
 }
 
@@ -33,14 +35,27 @@ pub fn mstore(evm: &mut EVM) -> NextAction {
         evm.memory[offset + 31 - i] = val.byte(i);
     }
 
+    update_msize(evm, offset, false);
+
     NextAction::Continue
 }
 
+// 0x53
 pub fn mstore8(evm: &mut EVM) -> NextAction {
     let offset = evm.stack.pop().unwrap().as_usize();
     let val = evm.stack.pop().unwrap();
 
     evm.memory[offset] = u8::try_from(val % 256).ok().unwrap();
+
+    update_msize(evm, offset, true);
+
+    NextAction::Continue
+}
+
+// 0x59
+pub fn msize(evm: &mut EVM) -> NextAction {
+    let val = U256::from(evm.msize);
+    evm.stack.push(val);
 
     NextAction::Continue
 }

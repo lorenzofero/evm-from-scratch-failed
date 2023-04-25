@@ -47,4 +47,8 @@ This section describes some thoughts I had while implementing the EVM in Rust:
 - I'm not 100% with Rust module tree, and I don't like very much how the project tree is. Maybe it will change with time.
 
 
+0xff = 255
+255 + 32 = 287
+287 / 32 = 5
+
 
