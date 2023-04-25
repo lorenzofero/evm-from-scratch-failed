@@ -14,8 +14,8 @@ pub struct EvmResult {
 #[derive(Debug)]
 pub struct EVM {
     pub stack: Vec<U256>,
+    pub memory: Vec<u8>,
     pub pc: usize,
-    // TODO: execution stuff should be in its own struct
     pub execution_bytecode: Vec<u8>,
     pub jumpdests: Vec<usize>,
 }
@@ -28,6 +28,9 @@ impl EVM {
     pub fn new() -> EVM {
         let evm = EVM {
             stack: Vec::with_capacity(1024),
+            // TODO: size may change; zero is a special value
+            // which does not require copy
+            memory: vec![0; 64],
             pc: 0,
             execution_bytecode: Vec::new(),
             jumpdests: Vec::new(),
@@ -40,8 +43,7 @@ impl EVM {
         let opcodes = get_opcodes();
         self.execution_bytecode = hex::decode(bytecode).unwrap();
         self.jumpdests = get_jumpdests(&self.execution_bytecode);
-
-        EVM::debug(&format!("jumpdests {:x?}", self.jumpdests));
+        self.memory = vec![0; 64];
 
         let mut success = true;
 

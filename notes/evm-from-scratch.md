@@ -30,9 +30,13 @@ Defining a real entity such as the EVM is not possible, however, the following '
 #### 'Definition': EVM
 The main characteristics of the **EVM** are:
 - stack-based virtual machine of 1024 bytes, with word size (and thus size of stack items) of 256-bit (32 bytes);
-- volatile memory model of bytes array, word-addressed;
+- volatile memory model of bytes array, with word-address and word-addressed;
 - storage model of word array, word-addressed;
 - does not follow the standard von Neumann architecture. Rather than storing program code in generally-accessible memory or storage, it is stored separately in a virtual ROM interactable only through specialised instruction.
+
+#### Observation: about word-addressing
+See https://en.wikipedia.org/wiki/Word_addressing. We have that every address contains a word (it is word-address) and it is not byte addressed (i.e. the address count increases by the number of byte in each address) but word address, which means that the address count will increase by one.
+
 
 
 

@@ -25,8 +25,8 @@ fn push_n(evm: &mut EVM, n: u8) -> NextAction {
     let mut str = String::new();
     for _i in 1..=n {
         let byte = evm.execution_bytecode.get(evm.pc).expect("Missing data");
-        if byte <= &u8::from(9) {
-            str.push_str(&format!("0{}", byte));
+        if byte <= &u8::from(15) {
+            str.push_str(&format!("0{:x}", byte));
         } else {
             str.push_str(&format!("{:x}", byte));
         }
@@ -147,6 +147,9 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
     opcodes.insert(0x50, Box::new(opcodes::stack::pop));
+    opcodes.insert(0x51, Box::new(opcodes::memory::mload));
+    opcodes.insert(0x52, Box::new(opcodes::memory::mstore));
+    opcodes.insert(0x53, Box::new(opcodes::memory::mstore8));
     opcodes.insert(0x56, Box::new(opcodes::stack::jump));
     opcodes.insert(0x57, Box::new(opcodes::stack::jumpi));
     opcodes.insert(0x58, Box::new(opcodes::stack::pc));
