@@ -85,6 +85,7 @@ pub fn sha3(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Continue
 }
 
+
 // 0x5a
 /// This is not supported yet, it returns `U256::MAX`
 pub fn gas(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
@@ -96,3 +97,5 @@ pub fn gas(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
 pub fn invalid(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Exit(1)
 }
+
+

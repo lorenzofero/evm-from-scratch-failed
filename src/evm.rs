@@ -40,7 +40,7 @@ impl EVM {
     pub fn execute(self: &mut Self, data: ExecutionData) -> EvmResult {
         let opcodes = get_opcodes();
 
-        self.jumpdests = get_jumpdests(data.bytecode);
+        self.jumpdests = get_jumpdests(&data.bytecode);
         self.memory = vec![0; 256];
         self.msize = 0;
 

@@ -43,7 +43,7 @@ fn generate_push_n_fn(n: u8) -> Opcode {
         panic!("ERROR: arg must be a number between 0 and 32 included")
     }
 
-    Box::new(move |evm: &mut EVM, data: &ExecutionData| push_n(evm, n, data))
+    Box::new(move |evm: &mut EVM, _data: &ExecutionData| push_n(evm, n, _data))
 }
 
 fn dup_n(evm: &mut EVM, n: u8) -> NextAction {
@@ -110,7 +110,7 @@ fn generate_swap_n_fn(n: u8) -> Opcode {
         panic!();
     }
 
-    Box::new(move |evm: &mut EVM, _data: &ExecutionData| swap_n(evm, n))
+    Box::new(move |evm: &mut EVM, __data: &ExecutionData| swap_n(evm, n))
 }
 
 // It'd better to have them static. See PHF crate.
@@ -127,6 +127,7 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x07, Box::new(opcodes::arithmetic::s_modulo));
     opcodes.insert(0x08, Box::new(opcodes::arithmetic::add_mod));
     opcodes.insert(0x09, Box::new(opcodes::arithmetic::mul_mod));
+    opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
 
     opcodes.insert(0x10, Box::new(opcodes::logic::lt));
     opcodes.insert(0x11, Box::new(opcodes::logic::gt));
@@ -144,8 +145,11 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x1d, Box::new(opcodes::misc::sar));
     opcodes.insert(0x1a, Box::new(opcodes::misc::byte));
     opcodes.insert(0x20, Box::new(opcodes::misc::sha3));
+    opcodes.insert(0x30, Box::new(opcodes::transaction::address));
+    opcodes.insert(0x32, Box::new(opcodes::transaction::origin));
+    opcodes.insert(0x33, Box::new(opcodes::transaction::caller));
+    opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));
 
-    opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
     opcodes.insert(0x50, Box::new(opcodes::stack::pop));
     opcodes.insert(0x51, Box::new(opcodes::memory::mload));

@@ -1,12 +1,12 @@
 use evm_from_scratch::{
     evm::EVM,
-    utils::types::{Evmtest, ExecutionData},
+    utils::types::{EvmTest, ExecutionData},
 };
 use primitive_types::U256;
 
 fn main() {
     let text = std::fs::read_to_string("./tests.json").unwrap();
-    let data: Vec<Evmtest> = serde_json::from_str(&text).unwrap();
+    let data: Vec<EvmTest> = serde_json::from_str(&text).unwrap();
 
     let total = data.len();
 

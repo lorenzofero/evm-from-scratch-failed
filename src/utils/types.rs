@@ -16,7 +16,7 @@ pub type Opcode = Box<dyn Fn(&mut EVM, &ExecutionData) -> NextAction>;
 pub type Opcodes = HashMap<u8, Opcode>;
 
 #[derive(Debug, Deserialize)]
-pub struct Evmtest {
+pub struct EvmTest {
     pub name: String,
     pub hint: String,
     pub code: Code,
