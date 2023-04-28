@@ -1,8 +1,9 @@
 use primitive_types::U256;
+use sha3::{Digest, Keccak256};
 
 use crate::{
     evm::{
-        utils::{flip_sign, is_negative},
+        utils::{flip_sign, is_negative, update_msize},
         EVM,
     },
     utils::{logger::Logger, types::NextAction},
@@ -73,4 +74,25 @@ pub fn gas(evm: &mut EVM) -> NextAction {
 // 0xfe
 pub fn invalid(_evm: &mut EVM) -> NextAction {
     NextAction::Exit(1)
+}
+
+// 0x20
+pub fn sha3(evm: &mut EVM) -> NextAction {
+    let mut hasher = Keccak256::new();
+
+    let starting_offset = evm.stack.pop().unwrap().as_usize();
+    let ending_offset = evm.stack.pop().unwrap().as_usize();
+
+    let data = &evm.memory[starting_offset..ending_offset];
+    hasher.update(data);
+
+    let hash = hasher.finalize();
+    let vec = hash.to_vec();
+
+    let val = U256::from(&vec[..]);
+    evm.stack.push(val);
+
+    update_msize(evm, ending_offset);
+
+    NextAction::Continue
 }

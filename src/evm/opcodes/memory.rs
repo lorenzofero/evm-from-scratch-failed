@@ -21,7 +21,7 @@ pub fn mload(evm: &mut EVM) -> NextAction {
     let val = U256::from_str_radix(&str, 16).unwrap();
     evm.stack.push(val);
 
-    update_msize(evm, offset, false);
+    update_msize(evm, offset + 31);
 
     NextAction::Continue
 }
@@ -35,7 +35,7 @@ pub fn mstore(evm: &mut EVM) -> NextAction {
         evm.memory[offset + 31 - i] = val.byte(i);
     }
 
-    update_msize(evm, offset, false);
+    update_msize(evm, offset + 31);
 
     NextAction::Continue
 }
@@ -47,7 +47,7 @@ pub fn mstore8(evm: &mut EVM) -> NextAction {
 
     evm.memory[offset] = u8::try_from(val % 256).ok().unwrap();
 
-    update_msize(evm, offset, true);
+    update_msize(evm, offset);
 
     NextAction::Continue
 }

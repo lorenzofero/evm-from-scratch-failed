@@ -143,6 +143,7 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x1c, Box::new(opcodes::misc::shr));
     opcodes.insert(0x1d, Box::new(opcodes::misc::sar));
     opcodes.insert(0x1a, Box::new(opcodes::misc::byte));
+    opcodes.insert(0x20, Box::new(opcodes::misc::sha3));
 
     opcodes.insert(0x0a, Box::new(opcodes::arithmetic::exp));
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
@@ -218,13 +219,7 @@ pub fn is_pc_on_jumpdest(evm: &EVM) -> bool {
 
 /// Updates EVM memory size 
 /// # Arguments
-/// * `offset`: `usize` representing the offset in bytes where memory
-///     has been written or read 
-/// * `byte_only`: `bool` representing whether only one byte has been 
-///     written, as in `mstore8`
-pub fn update_msize(evm: &mut EVM, offset: usize, byte_only: bool) {
-    let interaction_size = if byte_only { 0 } else { 31 };
-    let last_byte = offset + interaction_size;
+pub fn update_msize(evm: &mut EVM, last_byte: usize) {
     let word_address = last_byte / 32;
     let new_msize = (word_address + 1) * 32;
 
