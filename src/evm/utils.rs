@@ -117,7 +117,7 @@ fn generate_swap_n_fn(n: u8) -> Opcode {
 pub fn get_opcodes() -> Opcodes {
     let mut opcodes: Opcodes = HashMap::new();
 
-    opcodes.insert(0x00, Box::new(opcodes::stop));
+    opcodes.insert(0x00, Box::new(opcodes::misc::stop));
     opcodes.insert(0x01, Box::new(opcodes::arithmetic::add));
     opcodes.insert(0x02, Box::new(opcodes::arithmetic::mul));
     opcodes.insert(0x03, Box::new(opcodes::arithmetic::sub));
@@ -145,10 +145,20 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x1d, Box::new(opcodes::misc::sar));
     opcodes.insert(0x1a, Box::new(opcodes::misc::byte));
     opcodes.insert(0x20, Box::new(opcodes::misc::sha3));
+
     opcodes.insert(0x30, Box::new(opcodes::transaction::address));
     opcodes.insert(0x32, Box::new(opcodes::transaction::origin));
     opcodes.insert(0x33, Box::new(opcodes::transaction::caller));
     opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));
+
+    opcodes.insert(0x40, Box::new(opcodes::block::blockhash));
+    opcodes.insert(0x41, Box::new(opcodes::block::coinbase));
+    opcodes.insert(0x42, Box::new(opcodes::block::timestamp));
+    opcodes.insert(0x43, Box::new(opcodes::block::number));
+    opcodes.insert(0x44, Box::new(opcodes::block::difficulty));
+    opcodes.insert(0x45, Box::new(opcodes::block::gaslimit));
+    opcodes.insert(0x46, Box::new(opcodes::block::chain));
+    opcodes.insert(0x48, Box::new(opcodes::block::basefee));
 
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
     opcodes.insert(0x50, Box::new(opcodes::stack::pop));

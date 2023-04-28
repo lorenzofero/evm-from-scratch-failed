@@ -9,6 +9,11 @@ use crate::{
     utils::{logger::Logger, types::{NextAction, ExecutionData}},
 };
 
+// 0x00
+pub fn stop(_evm: &mut EVM, __data: &ExecutionData) -> NextAction {
+    NextAction::Exit(0)
+}
+
 // 0x1b
 pub fn shl(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let shift = evm.stack.pop().unwrap();
