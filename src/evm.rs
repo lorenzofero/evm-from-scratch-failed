@@ -3,17 +3,14 @@ pub mod opcodes;
 pub mod utils;
 
 use self::utils::{get_jumpdests, get_opcodes};
-use crate::utils::{logger::Logger, types::NextAction};
+use crate::utils::{
+    logger::Logger,
+    types::{EvmResult, ExecutionData, NextAction},
+};
 use primitive_types::U256;
-
-pub struct EvmResult {
-    pub stack: Vec<U256>,
-    pub success: bool,
-}
 
 #[derive(Debug)]
 pub struct EVM {
-    pub execution_bytecode: Vec<u8>,
     pub jumpdests: Vec<usize>,
     pub memory: Vec<u8>,
     pub msize: usize,
@@ -34,28 +31,23 @@ impl EVM {
             memory: vec![0; 256],
             pc: 0,
             msize: 0,
-            execution_bytecode: Vec::new(),
             jumpdests: Vec::new(),
         };
 
         evm
     }
 
-    pub fn execute(self: &mut Self, bytecode: &str) -> EvmResult {
+    pub fn execute(self: &mut Self, data: ExecutionData) -> EvmResult {
         let opcodes = get_opcodes();
 
-        self.execution_bytecode = hex::decode(bytecode).unwrap();
-        self.jumpdests = get_jumpdests(&self.execution_bytecode);
+        self.jumpdests = get_jumpdests(data.bytecode);
         self.memory = vec![0; 256];
         self.msize = 0;
 
         let mut success = true;
 
-        while self.pc < self.execution_bytecode.len() {
-            let opcode_num = self
-                .execution_bytecode
-                .get(self.pc)
-                .expect("Could not read bytecode");
+        while self.pc < data.bytecode.len() {
+            let opcode_num = data.bytecode.get(self.pc).expect("Could not read bytecode");
 
             self.pc += 1;
 
@@ -64,7 +56,7 @@ impl EVM {
                 opcode_num
             ));
 
-            let next_action = opcode(self);
+            let next_action = opcode(self, &data);
 
             match next_action {
                 NextAction::Exit(status_code) => {

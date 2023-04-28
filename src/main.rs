@@ -1,27 +1,8 @@
-use evm_from_scratch::evm::EVM;
+use evm_from_scratch::{
+    evm::EVM,
+    utils::types::{Evmtest, ExecutionData},
+};
 use primitive_types::U256;
-use serde::Deserialize;
-
-#[derive(Debug, Deserialize)]
-struct Evmtest {
-    name: String,
-    hint: String,
-    code: Code,
-    expect: Expect,
-}
-
-#[derive(Debug, Deserialize)]
-struct Code {
-    asm: String,
-    bin: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct Expect {
-    stack: Option<Vec<String>>,
-    success: bool,
-}
-
 
 fn main() {
     let text = std::fs::read_to_string("./tests.json").unwrap();
@@ -31,11 +12,14 @@ fn main() {
 
     let mut evm = EVM::new();
 
-
     for (index, test) in data.iter().enumerate() {
         println!("Test {} of {}: {}", index + 1, total, test.name);
 
-        let result = evm.execute(&test.code.bin);
+        let result = evm.execute(ExecutionData {
+            bytecode: &hex::decode(&test.code.bin).unwrap(),
+            tx: &test.tx,
+            block: &test.block,
+        });
 
         let mut expected_stack: Vec<U256> = Vec::new();
         if let Some(ref stacks) = test.expect.stack {
@@ -53,7 +37,7 @@ fn main() {
                 }
             }
         }
-        
+
         matching = matching && result.success == test.expect.success;
 
         if !matching {
@@ -65,7 +49,7 @@ fn main() {
                 println!("  {:#X},", v);
             }
             println!("]\n");
-            
+
             println!("Actual success: {:?}", result.success);
             println!("Actual stack: [");
             for v in result.stack {
@@ -81,4 +65,3 @@ fn main() {
     }
     println!("Congratulations!");
 }
-

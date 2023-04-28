@@ -2,17 +2,17 @@ use primitive_types::U256;
 
 use crate::{
     evm::{utils::is_pc_on_jumpdest, EVM},
-    utils::types::NextAction,
+    utils::types::{NextAction, ExecutionData},
 };
 
 // 0x50
-pub fn pop(evm: &mut EVM) -> NextAction {
+pub fn pop(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     evm.stack.pop();
     NextAction::Continue
 }
 
 // 0x56
-pub fn jump(evm: &mut EVM) -> NextAction {
+pub fn jump(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let new_pc = evm.stack.pop().unwrap().as_usize();
 
     evm.pc = new_pc;
@@ -26,7 +26,7 @@ pub fn jump(evm: &mut EVM) -> NextAction {
 }
 
 // 0x57
-pub fn jumpi(evm: &mut EVM) -> NextAction {
+pub fn jumpi(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let new_pc = evm.stack.pop().unwrap().as_usize();
     let condition = evm.stack.pop().unwrap();
 
@@ -45,12 +45,12 @@ pub fn jumpi(evm: &mut EVM) -> NextAction {
 }
 
 // 0x58
-pub fn pc(evm: &mut EVM) -> NextAction {
+pub fn pc(evm: &mut EVM, __data: &ExecutionData) -> NextAction {
     evm.stack.push(U256::from(evm.pc - 1));
     NextAction::Continue
 }
 
 // 0x5B
-pub fn jumpdest(_evm: &mut EVM) -> NextAction {
+pub fn jumpdest(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Continue
 }

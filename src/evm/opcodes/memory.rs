@@ -1,9 +1,12 @@
 use primitive_types::U256;
 
-use crate::{evm::{EVM, utils::update_msize}, utils::types::NextAction};
+use crate::{
+    evm::{utils::update_msize, EVM},
+    utils::types::{NextAction, ExecutionData},
+};
 
 // 0x51
-pub fn mload(evm: &mut EVM) -> NextAction {
+pub fn mload(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let offset = evm.stack.pop().unwrap().as_usize();
 
     let mut str = String::with_capacity(32);
@@ -27,7 +30,7 @@ pub fn mload(evm: &mut EVM) -> NextAction {
 }
 
 // 0x52
-pub fn mstore(evm: &mut EVM) -> NextAction {
+pub fn mstore(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let offset = evm.stack.pop().unwrap().as_usize();
     let val = evm.stack.pop().unwrap();
 
@@ -41,7 +44,7 @@ pub fn mstore(evm: &mut EVM) -> NextAction {
 }
 
 // 0x53
-pub fn mstore8(evm: &mut EVM) -> NextAction {
+pub fn mstore8(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let offset = evm.stack.pop().unwrap().as_usize();
     let val = evm.stack.pop().unwrap();
 
@@ -53,7 +56,7 @@ pub fn mstore8(evm: &mut EVM) -> NextAction {
 }
 
 // 0x59
-pub fn msize(evm: &mut EVM) -> NextAction {
+pub fn msize(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let val = U256::from(evm.msize);
     evm.stack.push(val);
 

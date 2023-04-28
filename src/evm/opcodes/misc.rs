@@ -6,11 +6,11 @@ use crate::{
         utils::{flip_sign, is_negative, update_msize},
         EVM,
     },
-    utils::{logger::Logger, types::NextAction},
+    utils::{logger::Logger, types::{NextAction, ExecutionData}},
 };
 
 // 0x1b
-pub fn shl(evm: &mut EVM) -> NextAction {
+pub fn shl(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let shift = evm.stack.pop().unwrap();
     let val = evm.stack.pop().unwrap();
     evm.stack.push(val << shift);
@@ -19,7 +19,7 @@ pub fn shl(evm: &mut EVM) -> NextAction {
 }
 
 // 0x1c
-pub fn shr(evm: &mut EVM) -> NextAction {
+pub fn shr(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let shift = evm.stack.pop().unwrap();
     let val = evm.stack.pop().unwrap();
     evm.stack.push(val >> shift);
@@ -29,7 +29,7 @@ pub fn shr(evm: &mut EVM) -> NextAction {
 
 // 0x1d
 /// This does not work if the number is small and shift is greater or equal 8
-pub fn sar(evm: &mut EVM) -> NextAction {
+pub fn sar(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let shift = evm.stack.pop().unwrap();
     let mut val = evm.stack.pop().unwrap();
 
@@ -46,7 +46,7 @@ pub fn sar(evm: &mut EVM) -> NextAction {
 }
 
 // 0x1a
-pub fn byte(evm: &mut EVM) -> NextAction {
+pub fn byte(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let offset = evm.stack.pop().unwrap();
     let val = evm.stack.pop().unwrap();
 
@@ -64,20 +64,8 @@ pub fn byte(evm: &mut EVM) -> NextAction {
     NextAction::Continue
 }
 
-// 0x5a
-/// This is not supported yet, it returns `U256::MAX`
-pub fn gas(evm: &mut EVM) -> NextAction {
-    evm.stack.push(U256::MAX);
-    NextAction::Continue
-}
-
-// 0xfe
-pub fn invalid(_evm: &mut EVM) -> NextAction {
-    NextAction::Exit(1)
-}
-
 // 0x20
-pub fn sha3(evm: &mut EVM) -> NextAction {
+pub fn sha3(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let mut hasher = Keccak256::new();
 
     let starting_offset = evm.stack.pop().unwrap().as_usize();
@@ -87,12 +75,24 @@ pub fn sha3(evm: &mut EVM) -> NextAction {
     hasher.update(data);
 
     let hash = hasher.finalize();
-    let vec = hash.to_vec();
+    let hash_vec = hash.to_vec();
 
-    let val = U256::from(&vec[..]);
+    let val = U256::from(&hash_vec[..]);
     evm.stack.push(val);
 
     update_msize(evm, ending_offset);
 
     NextAction::Continue
+}
+
+// 0x5a
+/// This is not supported yet, it returns `U256::MAX`
+pub fn gas(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
+    evm.stack.push(U256::MAX);
+    NextAction::Continue
+}
+
+// 0xfe
+pub fn invalid(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
+    NextAction::Exit(1)
 }

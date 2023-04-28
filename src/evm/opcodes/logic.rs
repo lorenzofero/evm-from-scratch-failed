@@ -7,11 +7,11 @@ use crate::{
         utils::{flip_sign, is_negative},
         EVM,
     },
-    utils::types::NextAction,
+    utils::types::{ExecutionData, NextAction},
 };
 
 // 0x10
-pub fn lt(evm: &mut EVM) -> NextAction {
+pub fn lt(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
@@ -23,7 +23,7 @@ pub fn lt(evm: &mut EVM) -> NextAction {
 }
 
 // 0x11
-pub fn gt(evm: &mut EVM) -> NextAction {
+pub fn gt(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
@@ -40,7 +40,7 @@ pub fn gt(evm: &mut EVM) -> NextAction {
 }
 
 // 0x12
-pub fn slt(evm: &mut EVM) -> NextAction {
+pub fn slt(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
@@ -66,7 +66,7 @@ pub fn slt(evm: &mut EVM) -> NextAction {
 }
 
 // 0x13
-pub fn sgt(evm: &mut EVM) -> NextAction {
+pub fn sgt(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let mut a = evm.stack.pop().unwrap();
     let mut b = evm.stack.pop().unwrap();
 
@@ -92,7 +92,7 @@ pub fn sgt(evm: &mut EVM) -> NextAction {
 }
 
 // 0x14
-pub fn eq(evm: &mut EVM) -> NextAction {
+pub fn eq(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
 
@@ -103,7 +103,7 @@ pub fn eq(evm: &mut EVM) -> NextAction {
 }
 
 // 0x15
-pub fn is_zero(evm: &mut EVM) -> NextAction {
+pub fn is_zero(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let result = if a.is_zero() { 1 } else { 0 };
     evm.stack.push(U256::from(result));
@@ -112,7 +112,7 @@ pub fn is_zero(evm: &mut EVM) -> NextAction {
 }
 
 // 0x15
-pub fn not(evm: &mut EVM) -> NextAction {
+pub fn not(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     evm.stack.push(!a);
 
@@ -120,7 +120,7 @@ pub fn not(evm: &mut EVM) -> NextAction {
 }
 
 // 0x16
-pub fn and(evm: &mut EVM) -> NextAction {
+pub fn and(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     evm.stack.push(a.bitand(b));
@@ -129,7 +129,7 @@ pub fn and(evm: &mut EVM) -> NextAction {
 }
 
 // 0x17
-pub fn or(evm: &mut EVM) -> NextAction {
+pub fn or(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     evm.stack.push(a.bitor(b));
@@ -137,7 +137,8 @@ pub fn or(evm: &mut EVM) -> NextAction {
     NextAction::Continue
 }
 
-pub fn xor(evm: &mut EVM) -> NextAction {
+// 0x18
+pub fn xor(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     let a = evm.stack.pop().unwrap();
     let b = evm.stack.pop().unwrap();
     evm.stack.push(a.bitxor(b));

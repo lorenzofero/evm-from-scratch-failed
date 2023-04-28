@@ -2,7 +2,7 @@ use crate::{
     evm::{opcodes, EVM},
     utils::{
         logger::Logger,
-        types::{NextAction, Opcode, Opcodes},
+        types::{ExecutionData, NextAction, Opcode, Opcodes},
     },
 };
 use primitive_types::U256;
@@ -21,10 +21,10 @@ pub fn is_negative(num: &U256) -> bool {
     num.bit(255)
 }
 
-fn push_n(evm: &mut EVM, n: u8) -> NextAction {
+fn push_n(evm: &mut EVM, n: u8, data: &ExecutionData) -> NextAction {
     let mut str = String::new();
     for _i in 1..=n {
-        let byte = evm.execution_bytecode.get(evm.pc).expect("Missing data");
+        let byte = data.bytecode.get(evm.pc).expect("Missing data");
         if byte <= &u8::from(15) {
             str.push_str(&format!("0{:x}", byte));
         } else {
@@ -43,7 +43,7 @@ fn generate_push_n_fn(n: u8) -> Opcode {
         panic!("ERROR: arg must be a number between 0 and 32 included")
     }
 
-    Box::new(move |evm: &mut EVM| push_n(evm, n))
+    Box::new(move |evm: &mut EVM, data: &ExecutionData| push_n(evm, n, data))
 }
 
 fn dup_n(evm: &mut EVM, n: u8) -> NextAction {
@@ -75,7 +75,7 @@ fn generate_dup_n_fn(n: u8) -> Opcode {
         panic!();
     }
 
-    Box::new(move |evm: &mut EVM| dup_n(evm, n))
+    Box::new(move |evm: &mut EVM, _data: &ExecutionData| dup_n(evm, n))
 }
 
 /// todo this is not good yet
@@ -110,7 +110,7 @@ fn generate_swap_n_fn(n: u8) -> Opcode {
         panic!();
     }
 
-    Box::new(move |evm: &mut EVM| swap_n(evm, n))
+    Box::new(move |evm: &mut EVM, _data: &ExecutionData| swap_n(evm, n))
 }
 
 // It'd better to have them static. See PHF crate.
@@ -217,7 +217,7 @@ pub fn is_pc_on_jumpdest(evm: &EVM) -> bool {
     }
 }
 
-/// Updates EVM memory size 
+/// Updates EVM memory size
 /// # Arguments
 pub fn update_msize(evm: &mut EVM, last_byte: usize) {
     let word_address = last_byte / 32;
