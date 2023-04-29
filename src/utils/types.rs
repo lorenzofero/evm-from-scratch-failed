@@ -13,7 +13,16 @@ pub enum NextAction {
 
 pub type Opcode = Box<dyn Fn(&mut EVM, &ExecutionData) -> NextAction>;
 
+pub type Address = String;
 pub type Opcodes = HashMap<u8, Opcode>;
+
+pub type State = HashMap<Address, AccountState>;
+
+#[derive(Debug, Deserialize)]
+pub struct AccountState {
+    pub nonce: Option<String>,
+    pub balance: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 pub struct EvmTest {
@@ -22,6 +31,7 @@ pub struct EvmTest {
     pub code: Code,
     pub tx: Option<TxData>,
     pub block: Option<BlockData>,
+    pub state: Option<State>,
     pub expect: Expect,
 }
 
@@ -64,8 +74,10 @@ pub struct EvmResult {
     pub success: bool,
 }
 
+#[derive(Debug)]
 pub struct ExecutionData<'a> {
     pub bytecode: &'a Vec<u8>,
     pub tx: &'a Option<TxData>,
     pub block: &'a Option<BlockData>,
+    pub state: &'a Option<State>,
 }

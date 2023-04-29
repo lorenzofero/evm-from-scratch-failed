@@ -19,6 +19,7 @@ fn main() {
             bytecode: &hex::decode(&test.code.bin).unwrap(),
             tx: &test.tx,
             block: &test.block,
+            state: &test.state,
         });
 
         let mut expected_stack: Vec<U256> = Vec::new();

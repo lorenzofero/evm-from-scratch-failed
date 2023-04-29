@@ -147,6 +147,7 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x20, Box::new(opcodes::misc::sha3));
 
     opcodes.insert(0x30, Box::new(opcodes::transaction::address));
+    opcodes.insert(0x31, Box::new(opcodes::state::balance));
     opcodes.insert(0x32, Box::new(opcodes::transaction::origin));
     opcodes.insert(0x33, Box::new(opcodes::transaction::caller));
     opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));

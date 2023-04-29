@@ -5,4 +5,4 @@ pub mod misc;
 pub mod stack;
 pub mod transaction;
 pub mod block;
-
+pub mod state;

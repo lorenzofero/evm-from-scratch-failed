@@ -2,14 +2,12 @@ use primitive_types::U256;
 
 use crate::{
     evm::EVM,
-    utils::types::{ExecutionData, NextAction},
+    utils::{types::{ExecutionData, NextAction}, logger::Logger},
 };
 
 // 0x40
 /// Not yet implemented in tests
-pub fn blockhash(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
-    evm.stack.push(U256::zero());
-
+pub fn blockhash(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Continue
 }
 
@@ -65,6 +63,7 @@ pub fn gaslimit(evm: &mut EVM, data: &ExecutionData) -> NextAction {
 
 // 0x46
 pub fn chain(evm: &mut EVM, data: &ExecutionData) -> NextAction {
+    EVM::debug(&format!("stack {:x?}", evm.stack));
     let chain_id = data.block.as_ref().unwrap().chainid.as_ref().unwrap();
 
     let val = U256::from_str_radix(chain_id, 16).unwrap();
