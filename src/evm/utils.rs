@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::{
     evm::{opcodes, EVM},
     utils::{
@@ -6,7 +8,6 @@ use crate::{
     },
 };
 use primitive_types::U256;
-use std::collections::HashMap;
 
 use super::constants::JUMPDEST;
 
@@ -150,6 +151,10 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x31, Box::new(opcodes::state::balance));
     opcodes.insert(0x32, Box::new(opcodes::transaction::origin));
     opcodes.insert(0x33, Box::new(opcodes::transaction::caller));
+    opcodes.insert(0x34, Box::new(opcodes::transaction::callvalue));
+    opcodes.insert(0x35, Box::new(opcodes::transaction::calldataload));
+    opcodes.insert(0x36, Box::new(opcodes::transaction::calldatasize));
+    opcodes.insert(0x37, Box::new(opcodes::transaction::calldatacopy));
     opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));
 
     opcodes.insert(0x40, Box::new(opcodes::block::blockhash));
@@ -233,7 +238,6 @@ pub fn is_pc_on_jumpdest(evm: &EVM) -> bool {
 }
 
 /// Updates EVM memory size
-/// # Arguments
 pub fn update_msize(evm: &mut EVM, last_byte: usize) {
     let word_address = last_byte / 32;
     let new_msize = (word_address + 1) * 32;
