@@ -155,6 +155,8 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x35, Box::new(opcodes::transaction::calldataload));
     opcodes.insert(0x36, Box::new(opcodes::transaction::calldatasize));
     opcodes.insert(0x37, Box::new(opcodes::transaction::calldatacopy));
+    opcodes.insert(0x38, Box::new(opcodes::misc::codesize));
+    opcodes.insert(0x39, Box::new(opcodes::misc::codecopy));
     opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));
 
     opcodes.insert(0x40, Box::new(opcodes::block::blockhash));

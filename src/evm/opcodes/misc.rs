@@ -6,7 +6,10 @@ use crate::{
         utils::{flip_sign, is_negative, update_msize},
         EVM,
     },
-    utils::{logger::Logger, types::{NextAction, ExecutionData}},
+    utils::{
+        logger::Logger,
+        types::{ExecutionData, NextAction},
+    },
 };
 
 // 0x00
@@ -90,6 +93,36 @@ pub fn sha3(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Continue
 }
 
+// 0x38
+pub fn codesize(evm: &mut EVM, data: &ExecutionData) -> NextAction {
+    let size = data.bytecode.len();
+
+    evm.stack.push(U256::from(size));
+
+    NextAction::Continue
+}
+
+// 0x39
+pub fn codecopy(evm: &mut EVM, data: &ExecutionData) -> NextAction {
+    let dest_offset = evm.stack.pop().unwrap().as_usize();
+    let offset = evm.stack.pop().unwrap().as_usize();
+    let size = evm.stack.pop().unwrap().as_usize();
+
+    let mut i = 0;
+    while i < size {
+        let byte = data
+            .bytecode
+            .get(offset + i)
+            .map(|b| b.clone())
+            .unwrap_or(0);
+        evm.memory[dest_offset + i] = byte;
+        i = i + 1;
+    }
+
+    update_msize(evm, dest_offset + size - 1);
+
+    NextAction::Continue
+}
 
 // 0x5a
 /// This is not supported yet, it returns `U256::MAX`
@@ -102,5 +135,3 @@ pub fn gas(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
 pub fn invalid(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Exit(1)
 }
-
-
