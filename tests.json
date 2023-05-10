@@ -19,7 +19,9 @@
       "bin": "6001"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -31,7 +33,9 @@
       "bin": "611122"
     },
     "expect": {
-      "stack": ["0x1122"],
+      "stack": [
+        "0x1122"
+      ],
       "success": true
     }
   },
@@ -43,7 +47,9 @@
       "bin": "6311223344"
     },
     "expect": {
-      "stack": ["0x11223344"],
+      "stack": [
+        "0x11223344"
+      ],
       "success": true
     }
   },
@@ -55,7 +61,9 @@
       "bin": "65112233445566"
     },
     "expect": {
-      "stack": ["0x112233445566"],
+      "stack": [
+        "0x112233445566"
+      ],
       "success": true
     }
   },
@@ -67,7 +75,9 @@
       "bin": "69112233445566778899aa"
     },
     "expect": {
-      "stack": ["0x112233445566778899aa"],
+      "stack": [
+        "0x112233445566778899aa"
+      ],
       "success": true
     }
   },
@@ -79,7 +89,9 @@
       "bin": "6a112233445566778899aabb"
     },
     "expect": {
-      "stack": ["0x112233445566778899aabb"],
+      "stack": [
+        "0x112233445566778899aabb"
+      ],
       "success": true
     }
   },
@@ -105,7 +117,10 @@
       "bin": "60016002"
     },
     "expect": {
-      "stack": ["0x2", "0x1"],
+      "stack": [
+        "0x2",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -117,7 +132,9 @@
       "bin": "6001600250"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -129,7 +146,9 @@
       "bin": "6001006002"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -141,7 +160,9 @@
       "bin": "6001600201"
     },
     "expect": {
-      "stack": ["0x3"],
+      "stack": [
+        "0x3"
+      ],
       "success": true
     }
   },
@@ -153,7 +174,9 @@
       "bin": "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600201"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -164,7 +187,9 @@
       "bin": "6002600302"
     },
     "expect": {
-      "stack": ["0x6"],
+      "stack": [
+        "0x6"
+      ],
       "success": true
     },
     "hint": ""
@@ -191,7 +216,9 @@
       "bin": "6002600303"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -217,7 +244,9 @@
       "bin": "6002600604"
     },
     "expect": {
-      "stack": ["0x3"],
+      "stack": [
+        "0x3"
+      ],
       "success": true
     }
   },
@@ -229,7 +258,9 @@
       "bin": "6006600204"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -241,7 +272,9 @@
       "bin": "6000600204"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -253,7 +286,9 @@
       "bin": "6003600a06"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -265,7 +300,9 @@
       "bin": "6011600506"
     },
     "expect": {
-      "stack": ["0x5"],
+      "stack": [
+        "0x5"
+      ],
       "success": true
     }
   },
@@ -277,7 +314,9 @@
       "bin": "6000600206"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -289,7 +328,9 @@
       "bin": "6008600a600a08"
     },
     "expect": {
-      "stack": ["0x4"],
+      "stack": [
+        "0x4"
+      ],
       "success": true
     }
   },
@@ -300,7 +341,9 @@
       "bin": "600260027fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff08"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     },
     "hint": ""
@@ -313,7 +356,9 @@
       "bin": "6008600a600a09"
     },
     "expect": {
-      "stack": ["0x4"],
+      "stack": [
+        "0x4"
+      ],
       "success": true
     }
   },
@@ -324,7 +369,9 @@
       "bin": "6002600a0a"
     },
     "expect": {
-      "stack": ["0x64"],
+      "stack": [
+        "0x64"
+      ],
       "success": true
     },
     "hint": ""
@@ -337,7 +384,9 @@
       "bin": "600a600a05"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -349,7 +398,9 @@
       "bin": "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe05"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -375,7 +426,9 @@
       "bin": "6003600a07"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -401,7 +454,9 @@
       "bin": "60007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd05"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -413,7 +468,9 @@
       "bin": "60007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd07"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -425,7 +482,9 @@
       "bin": "600a600910"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -437,7 +496,9 @@
       "bin": "600a600a10"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -449,7 +510,9 @@
       "bin": "600a600b10"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -461,7 +524,9 @@
       "bin": "6009600a11"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -473,7 +538,9 @@
       "bin": "600a600a11"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -485,7 +552,9 @@
       "bin": "600b600a11"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -497,7 +566,9 @@
       "bin": "60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff12"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -509,7 +580,9 @@
       "bin": "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff12"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -521,7 +594,9 @@
       "bin": "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600012"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -533,7 +608,9 @@
       "bin": "6009600a13"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -545,7 +622,9 @@
       "bin": "7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe13"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -557,7 +636,9 @@
       "bin": "7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe13"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -569,7 +650,9 @@
       "bin": "600a600a14"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -581,7 +664,9 @@
       "bin": "6009600a14"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -593,7 +678,9 @@
       "bin": "600915"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -605,7 +692,9 @@
       "bin": "600015"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -631,7 +720,9 @@
       "bin": "600e600316"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -643,7 +734,9 @@
       "bin": "600e600317"
     },
     "expect": {
-      "stack": ["0xf"],
+      "stack": [
+        "0xf"
+      ],
       "success": true
     }
   },
@@ -655,7 +748,9 @@
       "bin": "60f0600f18"
     },
     "expect": {
-      "stack": ["0xff"],
+      "stack": [
+        "0xff"
+      ],
       "success": true
     }
   },
@@ -667,7 +762,9 @@
       "bin": "600460011b"
     },
     "expect": {
-      "stack": ["0x8"],
+      "stack": [
+        "0x8"
+      ],
       "success": true
     }
   },
@@ -679,7 +776,9 @@
       "bin": "600460011c"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -691,7 +790,9 @@
       "bin": "60ff60041c"
     },
     "expect": {
-      "stack": ["0xf"],
+      "stack": [
+        "0xf"
+      ],
       "success": true
     }
   },
@@ -703,7 +804,9 @@
       "bin": "600163ffffffff1c"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -715,7 +818,9 @@
       "bin": "600260011d"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -741,7 +846,9 @@
       "bin": "7f0fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0063ffffffff1d"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -753,7 +860,9 @@
       "bin": "60ff601f1a"
     },
     "expect": {
-      "stack": ["0xff"],
+      "stack": [
+        "0xff"
+      ],
       "success": true
     }
   },
@@ -765,7 +874,9 @@
       "bin": "61ff00601e1a"
     },
     "expect": {
-      "stack": ["0xff"],
+      "stack": [
+        "0xff"
+      ],
       "success": true
     }
   },
@@ -777,7 +888,9 @@
       "bin": "62ff0000601d1a"
     },
     "expect": {
-      "stack": ["0xff"],
+      "stack": [
+        "0xff"
+      ],
       "success": true
     }
   },
@@ -789,7 +902,9 @@
       "bin": "7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff602a1a"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -801,7 +916,9 @@
       "bin": "60018001"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -813,7 +930,12 @@
       "bin": "60016002600382"
     },
     "expect": {
-      "stack": ["0x1", "0x3", "0x2", "0x1"],
+      "stack": [
+        "0x1",
+        "0x3",
+        "0x2",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -825,7 +947,14 @@
       "bin": "6001600260036004600584"
     },
     "expect": {
-      "stack": ["0x1", "0x5", "0x4", "0x3", "0x2", "0x1"],
+      "stack": [
+        "0x1",
+        "0x5",
+        "0x4",
+        "0x3",
+        "0x2",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -837,7 +966,17 @@
       "bin": "6001600260036004600560066007600887"
     },
     "expect": {
-      "stack": ["0x1", "0x8", "0x7", "0x6", "0x5", "0x4", "0x3", "0x2", "0x1"],
+      "stack": [
+        "0x1",
+        "0x8",
+        "0x7",
+        "0x6",
+        "0x5",
+        "0x4",
+        "0x3",
+        "0x2",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -849,7 +988,10 @@
       "bin": "6001600290"
     },
     "expect": {
-      "stack": ["0x1", "0x2"],
+      "stack": [
+        "0x1",
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -861,7 +1003,12 @@
       "bin": "600160026003600492"
     },
     "expect": {
-      "stack": ["0x1", "0x3", "0x2", "0x4"],
+      "stack": [
+        "0x1",
+        "0x3",
+        "0x2",
+        "0x4"
+      ],
       "success": true
     }
   },
@@ -873,7 +1020,14 @@
       "bin": "60016002600360046005600694"
     },
     "expect": {
-      "stack": ["0x1", "0x5", "0x4", "0x3", "0x2", "0x6"],
+      "stack": [
+        "0x1",
+        "0x5",
+        "0x4",
+        "0x3",
+        "0x2",
+        "0x6"
+      ],
       "success": true
     }
   },
@@ -885,7 +1039,16 @@
       "bin": "6001600260036004600560066007600896"
     },
     "expect": {
-      "stack": ["0x1", "0x7", "0x6", "0x5", "0x4", "0x3", "0x2", "0x8"],
+      "stack": [
+        "0x1",
+        "0x7",
+        "0x6",
+        "0x5",
+        "0x4",
+        "0x3",
+        "0x2",
+        "0x8"
+      ],
       "success": true
     }
   },
@@ -909,7 +1072,9 @@
       "bin": "58"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -921,7 +1086,9 @@
       "bin": "60005058"
     },
     "expect": {
-      "stack": ["0x3"],
+      "stack": [
+        "0x3"
+      ],
       "success": true
     }
   },
@@ -947,7 +1114,9 @@
       "bin": "60055660015b6002"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -983,7 +1152,9 @@
       "bin": "600060075760015b600250"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -995,7 +1166,9 @@
       "bin": "600160075760015b6002"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -1035,7 +1208,9 @@
       "bin": "60ff601f53600051"
     },
     "expect": {
-      "stack": ["0xff"],
+      "stack": [
+        "0xff"
+      ],
       "success": true
     }
   },
@@ -1047,7 +1222,9 @@
       "bin": "59"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1059,7 +1236,9 @@
       "bin": "6000515059"
     },
     "expect": {
-      "stack": ["0x20"],
+      "stack": [
+        "0x20"
+      ],
       "success": true
     }
   },
@@ -1071,7 +1250,9 @@
       "bin": "6039515059"
     },
     "expect": {
-      "stack": ["0x60"],
+      "stack": [
+        "0x60"
+      ],
       "success": true
     }
   },
@@ -1083,7 +1264,9 @@
       "bin": "60ff60ff5359"
     },
     "expect": {
-      "stack": ["0x100"],
+      "stack": [
+        "0x100"
+      ],
       "success": true
     }
   },
@@ -1112,7 +1295,9 @@
       "bin": "30"
     },
     "expect": {
-      "stack": ["0x1000000000000000000000000000000000000aaa"],
+      "stack": [
+        "0x1000000000000000000000000000000000000aaa"
+      ],
       "success": true
     }
   },
@@ -1127,7 +1312,9 @@
       "bin": "33"
     },
     "expect": {
-      "stack": ["0x1e79b045dc29eae9fdc69673c9dcd7c53e5e159d"],
+      "stack": [
+        "0x1e79b045dc29eae9fdc69673c9dcd7c53e5e159d"
+      ],
       "success": true
     }
   },
@@ -1142,7 +1329,9 @@
       "bin": "32"
     },
     "expect": {
-      "stack": ["0x1337"],
+      "stack": [
+        "0x1337"
+      ],
       "success": true
     }
   },
@@ -1156,7 +1345,9 @@
       "bin": "3a"
     },
     "expect": {
-      "stack": ["0x99"],
+      "stack": [
+        "0x99"
+      ],
       "success": true
     },
     "hint": ""
@@ -1171,7 +1362,9 @@
       "bin": "48"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     },
     "hint": ""
@@ -1187,7 +1380,9 @@
       "bin": "41"
     },
     "expect": {
-      "stack": ["0x777"],
+      "stack": [
+        "0x777"
+      ],
       "success": true
     }
   },
@@ -1202,7 +1397,9 @@
       "bin": "41"
     },
     "expect": {
-      "stack": ["0x888"],
+      "stack": [
+        "0x888"
+      ],
       "success": true
     }
   },
@@ -1217,7 +1414,9 @@
       "bin": "42"
     },
     "expect": {
-      "stack": ["0xe4e1c1"],
+      "stack": [
+        "0xe4e1c1"
+      ],
       "success": true
     }
   },
@@ -1232,7 +1431,9 @@
       "bin": "43"
     },
     "expect": {
-      "stack": ["0x1000001"],
+      "stack": [
+        "0x1000001"
+      ],
       "success": true
     }
   },
@@ -1247,7 +1448,9 @@
       "bin": "44"
     },
     "expect": {
-      "stack": ["0x20000"],
+      "stack": [
+        "0x20000"
+      ],
       "success": true
     }
   },
@@ -1261,7 +1464,9 @@
       "bin": "45"
     },
     "expect": {
-      "stack": ["0xffffffffffff"],
+      "stack": [
+        "0xffffffffffff"
+      ],
       "success": true
     },
     "hint": ""
@@ -1276,7 +1481,9 @@
       "bin": "46"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     },
     "hint": ""
@@ -1289,7 +1496,9 @@
       "bin": "600040"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1306,7 +1515,9 @@
       "bin": "731e79b045dc29eae9fdc69673c9dcd7c53e5e159d31"
     },
     "expect": {
-      "stack": ["0x100"],
+      "stack": [
+        "0x100"
+      ],
       "success": true
     }
   },
@@ -1318,7 +1529,9 @@
       "bin": "73af69610ea9ddc95883f97a6a3171d52165b69b0331"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1333,7 +1546,9 @@
       "bin": "34"
     },
     "expect": {
-      "stack": ["0x1000"],
+      "stack": [
+        "0x1000"
+      ],
       "success": true
     }
   },
@@ -1382,7 +1597,9 @@
       "bin": "36"
     },
     "expect": {
-      "stack": ["0x20"],
+      "stack": [
+        "0x20"
+      ],
       "success": true
     }
   },
@@ -1393,7 +1610,9 @@
       "bin": "36"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     },
     "hint": ""
@@ -1440,7 +1659,9 @@
       "bin": "38"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1451,7 +1672,9 @@
       "bin": "7300000000000000000000000000000000000000005038"
     },
     "expect": {
-      "stack": ["0x17"],
+      "stack": [
+        "0x17"
+      ],
       "success": true
     },
     "hint": ""
@@ -1491,7 +1714,9 @@
       "bin": "731e79b045dc29eae9fdc69673c9dcd7c53e5e159d3b"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     },
     "hint": ""
@@ -1512,7 +1737,9 @@
       "bin": "731000000000000000000000000000000000000aaa3b"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     }
   },
@@ -1521,7 +1748,7 @@
     "state": {
       "0x1000000000000000000000000000000000000aaa": {
         "code": {
-          "asm": null,
+          "asm": "PUSH1 1",
           "bin": "6001"
         }
       }
@@ -1544,7 +1771,7 @@
     "state": {
       "0x1000000000000000000000000000000000000aaa": {
         "code": {
-          "asm": null,
+          "asm": "",
           "bin": "FFFFFFFF"
         }
       }
@@ -1555,7 +1782,7 @@
     },
     "expect": {
       "stack": [
-        "0x29045a592007d0c246ef02c2223570da9522d0cf0f73282c79a1bc8f0bb2c238"
+        "0xF04DE4BBB3904FA19826729B137B901226CDB09448ECB47BC741404335614434"
       ],
       "success": true
     }
@@ -1567,7 +1794,9 @@
       "bin": "731000000000000000000000000000000000000aaa3f"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     },
     "hint": ""
@@ -1587,7 +1816,9 @@
       "bin": "47"
     },
     "expect": {
-      "stack": ["0x200"],
+      "stack": [
+        "0x200"
+      ],
       "success": true
     },
     "hint": ""
@@ -1600,7 +1831,9 @@
       "bin": "6001600055600054"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1611,7 +1844,9 @@
       "bin": "60026398fe5c2c556398fe5c2c54"
     },
     "expect": {
-      "stack": ["0x2"],
+      "stack": [
+        "0x2"
+      ],
       "success": true
     },
     "hint": ""
@@ -1624,7 +1859,9 @@
       "bin": "60ff54"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1787,7 +2024,10 @@
       "bin": "6001601f600060006000731000000000000000000000000000000000000c426000f1600051"
     },
     "expect": {
-      "stack": ["0x42", "0x1"],
+      "stack": [
+        "0x42",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1810,7 +2050,10 @@
       "bin": "60206000600060006000731000000000000000000000000000000000000c426000f1600051"
     },
     "expect": {
-      "stack": ["0x1000000000000000000000000000000000000aaa", "0x1"],
+      "stack": [
+        "0x1000000000000000000000000000000000000aaa",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1830,7 +2073,10 @@
       "bin": "6001601f600060006000731000000000000000000000000000000000000c426000f1600051"
     },
     "expect": {
-      "stack": ["0x42", "0x0"],
+      "stack": [
+        "0x42",
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1841,7 +2087,9 @@
       "bin": "3d"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     },
     "hint": ""
@@ -1861,7 +2109,9 @@
       "bin": "60006000600060006000731000000000000000000000000000000000000c426000f1503d"
     },
     "expect": {
-      "stack": ["0x1"],
+      "stack": [
+        "0x1"
+      ],
       "success": true
     },
     "hint": ""
@@ -1907,7 +2157,10 @@
       "bin": "600080808073dddddddddddddddddddddddddddddddddddddddd5af4600054"
     },
     "expect": {
-      "stack": ["0x1000000000000000000000000000000000000aaa", "0x1"],
+      "stack": [
+        "0x1000000000000000000000000000000000000aaa",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1927,7 +2180,10 @@
       "bin": "6001601f60006000731000000000000000000000000000000000000c426000fa600051"
     },
     "expect": {
-      "stack": ["0x42", "0x1"],
+      "stack": [
+        "0x42",
+        "0x1"
+      ],
       "success": true
     }
   },
@@ -1947,7 +2203,9 @@
       "bin": "6001601f60006000731000000000000000000000000000000000000c426000fa"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -1962,7 +2220,9 @@
       "bin": "600060006009f031"
     },
     "expect": {
-      "stack": ["0x9"],
+      "stack": [
+        "0x9"
+      ],
       "success": true
     }
   },
@@ -1994,7 +2254,9 @@
       "bin": "6c63ffffffff6000526004601cfd600052600d60136000f0"
     },
     "expect": {
-      "stack": ["0x0"],
+      "stack": [
+        "0x0"
+      ],
       "success": true
     }
   },
@@ -2015,7 +2277,10 @@
       "bin": "60008080808073dead00000000000000000000000000000000dead5af15073a1c300000000000000000000000000000000a1c33173dead00000000000000000000000000000000dead3b"
     },
     "expect": {
-      "stack": ["0x0", "0x7"],
+      "stack": [
+        "0x0",
+        "0x7"
+      ],
       "success": true
     }
   }

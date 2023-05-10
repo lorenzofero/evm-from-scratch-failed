@@ -6,3 +6,5 @@ pub mod stack;
 pub mod transaction;
 pub mod block;
 pub mod state;
+pub mod environmental;
+pub mod storage;

@@ -22,6 +22,7 @@ pub type State = HashMap<Address, AccountState>;
 pub struct AccountState {
     pub nonce: Option<String>,
     pub balance: Option<String>,
+    pub code: Option<Code>,
 }
 
 #[derive(Debug, Deserialize)]

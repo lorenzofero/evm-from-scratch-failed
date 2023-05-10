@@ -2,7 +2,10 @@ use primitive_types::U256;
 
 use crate::{
     evm::EVM,
-    utils::{types::{ExecutionData, NextAction}, logger::Logger},
+    utils::{
+        logger::Logger,
+        types::{ExecutionData, NextAction},
+    },
 };
 
 // 0x40
@@ -68,6 +71,25 @@ pub fn chain(evm: &mut EVM, data: &ExecutionData) -> NextAction {
 
     let val = U256::from_str_radix(chain_id, 16).unwrap();
     evm.stack.push(val);
+
+    NextAction::Continue
+}
+
+// 0x47
+pub fn selfbalance(evm: &mut EVM, data: &ExecutionData) -> NextAction {
+    let address = data.tx.as_ref().unwrap().to.as_ref().unwrap();
+    let state = data.state.as_ref().unwrap();
+    let account_state = state.get(address);
+
+    if let None = account_state {
+        evm.stack.push(U256::zero());
+        return NextAction::Continue;
+    }
+
+    let balance = account_state.unwrap().balance.as_ref().unwrap();
+    let balance = U256::from_str_radix(balance, 16).unwrap();
+
+    evm.stack.push(balance);
 
     NextAction::Continue
 }

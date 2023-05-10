@@ -2,6 +2,8 @@ pub mod constants;
 pub mod opcodes;
 pub mod utils;
 
+use std::collections::HashMap;
+
 use self::utils::{get_jumpdests, get_opcodes};
 use crate::utils::{
     logger::Logger,
@@ -13,6 +15,7 @@ use primitive_types::U256;
 pub struct EVM {
     pub jumpdests: Vec<usize>,
     pub memory: Vec<u8>,
+    pub storage: HashMap<usize, U256>,
     pub msize: usize,
     pub pc: usize,
     pub stack: Vec<U256>,
@@ -29,6 +32,7 @@ impl EVM {
             // TODO: size may change; zero is a special value
             // which does not require copy
             memory: vec![0; 256],
+            storage: HashMap::new(),
             pc: 0,
             msize: 0,
             jumpdests: Vec::new(),

@@ -158,6 +158,9 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x38, Box::new(opcodes::misc::codesize));
     opcodes.insert(0x39, Box::new(opcodes::misc::codecopy));
     opcodes.insert(0x3a, Box::new(opcodes::transaction::gasprice));
+    opcodes.insert(0x3b, Box::new(opcodes::environmental::extcodesize));
+    opcodes.insert(0x3c, Box::new(opcodes::environmental::extcodecopy));
+    opcodes.insert(0x3f, Box::new(opcodes::environmental::extcodehash));
 
     opcodes.insert(0x40, Box::new(opcodes::block::blockhash));
     opcodes.insert(0x41, Box::new(opcodes::block::coinbase));
@@ -166,6 +169,7 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x44, Box::new(opcodes::block::difficulty));
     opcodes.insert(0x45, Box::new(opcodes::block::gaslimit));
     opcodes.insert(0x46, Box::new(opcodes::block::chain));
+    opcodes.insert(0x47, Box::new(opcodes::block::selfbalance));
     opcodes.insert(0x48, Box::new(opcodes::block::basefee));
 
     // opcodes.insert(0x0b, Box::new(opcodes::sign_extend));
@@ -173,6 +177,8 @@ pub fn get_opcodes() -> Opcodes {
     opcodes.insert(0x51, Box::new(opcodes::memory::mload));
     opcodes.insert(0x52, Box::new(opcodes::memory::mstore));
     opcodes.insert(0x53, Box::new(opcodes::memory::mstore8));
+    opcodes.insert(0x54, Box::new(opcodes::storage::sload));
+    opcodes.insert(0x55, Box::new(opcodes::storage::sstore));
     opcodes.insert(0x56, Box::new(opcodes::stack::jump));
     opcodes.insert(0x57, Box::new(opcodes::stack::jumpi));
     opcodes.insert(0x58, Box::new(opcodes::stack::pc));
