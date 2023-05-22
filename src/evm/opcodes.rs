@@ -8,3 +8,4 @@ pub mod block;
 pub mod state;
 pub mod environmental;
 pub mod storage;
+pub mod logging;

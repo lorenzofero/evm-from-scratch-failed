@@ -45,7 +45,7 @@ pub fn jumpi(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
 }
 
 // 0x58
-pub fn pc(evm: &mut EVM, __data: &ExecutionData) -> NextAction {
+pub fn pc(evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     evm.stack.push(U256::from(evm.pc - 1));
     NextAction::Continue
 }

@@ -11,6 +11,23 @@ pub enum NextAction {
     Exit(u8),
 }
 
+#[derive(Debug)]
+pub struct Logs {
+    pub address: String,
+    pub data: String,
+    pub topics: Vec<String>,
+}
+
+impl Logs {
+    pub fn new() -> Logs {
+        Logs {
+            address: String::new(),
+            data: String::new(),
+            topics: Vec::new(),
+        }
+    }
+}
+
 pub type Opcode = Box<dyn Fn(&mut EVM, &ExecutionData) -> NextAction>;
 
 pub type Address = String;
@@ -73,6 +90,7 @@ pub struct BlockData {
 pub struct EvmResult {
     pub stack: Vec<U256>,
     pub success: bool,
+    pub logs: Logs
 }
 
 #[derive(Debug)]

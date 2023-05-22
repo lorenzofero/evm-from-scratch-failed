@@ -4,7 +4,7 @@ use crate::{
     evm::{opcodes, EVM},
     utils::{
         logger::Logger,
-        types::{ExecutionData, NextAction, Opcode, Opcodes},
+        types::{ExecutionData, Logs, NextAction, Opcode, Opcodes},
     },
 };
 use primitive_types::U256;
@@ -111,7 +111,53 @@ fn generate_swap_n_fn(n: u8) -> Opcode {
         panic!();
     }
 
-    Box::new(move |evm: &mut EVM, __data: &ExecutionData| swap_n(evm, n))
+    Box::new(move |evm: &mut EVM, _data: &ExecutionData| swap_n(evm, n))
+}
+
+fn log_n(evm: &mut EVM, data: &ExecutionData, n: u8) -> NextAction {
+    if n > 5 {
+        panic!("Invalid number for LOG0...LOG4 operation");
+    }
+
+    let address = data.tx.as_ref().unwrap().to.as_ref().unwrap();
+
+    let offset = evm.stack.pop().unwrap().as_usize();
+    let size = evm.stack.pop().unwrap().as_usize();
+
+    let mut str = String::with_capacity(32);
+
+    for i in 0..=size {
+        let byte = evm.memory[offset + i];
+        if byte <= u8::from(15) {
+            str.push_str(&format!("0{:x}", byte));
+        } else {
+            str.push_str(&format!("{:x}", byte));
+        }
+    }
+
+    update_msize(evm, offset + size);
+
+    let mut topics: Vec<String> = Vec::with_capacity(4);
+
+    if n >= 1 {
+        let mut counter = 1;
+        while counter <= n {
+            topics.push(format!("{:x?}", evm.stack.pop().unwrap()));
+            counter += 1;
+        }
+    }
+
+    evm.logs = Logs {
+        address: address.clone(),
+        data: str.clone(),
+        topics,
+    };
+
+    NextAction::Continue
+}
+
+fn generate_log_n_fn(n: u8) -> Opcode {
+    Box::new(move |evm: &mut EVM, data: &ExecutionData| log_n(evm, data, n))
 }
 
 // It'd better to have them static. See PHF crate.
@@ -189,6 +235,7 @@ pub fn get_opcodes() -> Opcodes {
     insert_push_n_functions(&mut opcodes);
     insert_dup_n_functions(&mut opcodes);
     insert_swap_n_functions(&mut opcodes);
+    insert_log_n_function(&mut opcodes);
 
     opcodes.insert(0xfe, Box::new(opcodes::misc::invalid));
 
@@ -210,6 +257,12 @@ fn insert_dup_n_functions(opcodes: &mut Opcodes) {
 fn insert_swap_n_functions(opcodes: &mut Opcodes) {
     for n in 1..=16 {
         opcodes.insert(0x8f + n, generate_swap_n_fn(n));
+    }
+}
+
+fn insert_log_n_function(opcodes: &mut Opcodes) {
+    for n in 0..=4 {
+        opcodes.insert(0xa0 + n, generate_log_n_fn(n));
     }
 }
 

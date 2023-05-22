@@ -13,7 +13,7 @@ use crate::{
 };
 
 // 0x00
-pub fn stop(_evm: &mut EVM, __data: &ExecutionData) -> NextAction {
+pub fn stop(_evm: &mut EVM, _data: &ExecutionData) -> NextAction {
     NextAction::Exit(0)
 }
 

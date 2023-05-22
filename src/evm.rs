@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use self::utils::{get_jumpdests, get_opcodes};
 use crate::utils::{
     logger::Logger,
-    types::{EvmResult, ExecutionData, NextAction},
+    types::{EvmResult, ExecutionData, Logs, NextAction},
 };
 use primitive_types::U256;
 
@@ -19,6 +19,7 @@ pub struct EVM {
     pub msize: usize,
     pub pc: usize,
     pub stack: Vec<U256>,
+    pub logs: Logs,
 }
 
 impl<'a> Logger<'a> for EVM {
@@ -36,6 +37,7 @@ impl EVM {
             pc: 0,
             msize: 0,
             jumpdests: Vec::new(),
+            logs: Logs::new(),
         };
 
         evm
@@ -45,8 +47,6 @@ impl EVM {
         let opcodes = get_opcodes();
 
         self.jumpdests = get_jumpdests(&data.bytecode);
-        self.memory = vec![0; 256];
-        self.msize = 0;
 
         let mut success = true;
 
@@ -81,6 +81,9 @@ impl EVM {
     fn reset(&mut self) -> () {
         self.pc = 0;
         self.stack.clear();
+        self.memory = vec![0; 256];
+        self.msize = 0;
+        self.logs = Logs::new();
     }
 
     fn get_result(&self, success: bool) -> EvmResult {
@@ -90,6 +93,11 @@ impl EVM {
         EvmResult {
             stack: clone,
             success,
+            logs: Logs {
+                address: self.logs.address.clone(),
+                data: self.logs.data.clone(),
+                topics: self.logs.topics.clone(),
+            },
         }
     }
 }
