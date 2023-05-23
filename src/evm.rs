@@ -20,6 +20,7 @@ pub struct EVM {
     pub pc: usize,
     pub stack: Vec<U256>,
     pub logs: Logs,
+    pub result: String,
 }
 
 impl<'a> Logger<'a> for EVM {
@@ -38,6 +39,7 @@ impl EVM {
             msize: 0,
             jumpdests: Vec::new(),
             logs: Logs::new(),
+            result: String::new(),
         };
 
         evm
@@ -84,6 +86,7 @@ impl EVM {
         self.memory = vec![0; 256];
         self.msize = 0;
         self.logs = Logs::new();
+        self.result = String::new();
     }
 
     fn get_result(&self, success: bool) -> EvmResult {
@@ -98,6 +101,7 @@ impl EVM {
                 data: self.logs.data.clone(),
                 topics: self.logs.topics.clone(),
             },
+            result: self.result.clone(),
         }
     }
 }

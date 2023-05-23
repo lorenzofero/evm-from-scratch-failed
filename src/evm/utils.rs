@@ -237,6 +237,7 @@ pub fn get_opcodes() -> Opcodes {
     insert_swap_n_functions(&mut opcodes);
     insert_log_n_function(&mut opcodes);
 
+    opcodes.insert(0xf3, Box::new(opcodes::system::return_data));
     opcodes.insert(0xfe, Box::new(opcodes::misc::invalid));
 
     opcodes

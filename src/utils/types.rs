@@ -90,7 +90,8 @@ pub struct BlockData {
 pub struct EvmResult {
     pub stack: Vec<U256>,
     pub success: bool,
-    pub logs: Logs
+    pub logs: Logs,
+    pub result: String,
 }
 
 #[derive(Debug)]
